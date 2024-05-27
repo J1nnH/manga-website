@@ -36,7 +36,7 @@ export default function Header() {
             </li>
             <li className="min-w-[fit-content]">
               <a
-                href="/"
+                href="/ranking"
                 className="hover:text-gray-400 transition-colors duration-300"
               >
                 ranking
