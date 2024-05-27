@@ -17,7 +17,7 @@ export default async function Home() {
           </div>
         </div>
         {/* Grid of latest updates */}
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {latestUpdates.results.map(async (manga) => {
             const mangaInfo = await mangadex.fetchMangaInfo(manga.id);
             return (
