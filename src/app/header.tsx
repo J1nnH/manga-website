@@ -14,7 +14,7 @@ export default function Header() {
     <header className="flex flex-col bg-gray-800 text-white p-4 justify-between items-center w-full">
       <div className="flex align-middle justify-center items-center w-full">
         <a href="/">
-          <Image src="/skull.avif" alt="Logo" width={100} height={100} />
+          <Image src="/manga.png" alt="Logo" width={100} height={100} />
         </a>
         <nav className="flex-grow m-2 w-[30%] overflow-auto scrollbar">
           <ul className="flex space-x-10 text-lg uppercase">
