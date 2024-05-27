@@ -23,11 +23,11 @@ export default function RootLayout({
           <nav className="flex-grow">
             <ul className="flex space-x-10 text-lg">
               <li><a href="/" className="hover:text-gray-400 transition-colors duration-300">PEMBAHARUAN</a></li>
-              <li><a href="/" className="hover:text-gray-400 transition-colors duration-300">UNGGULAN</a></li>
-              <li><a href="/" className="hover:text-gray-400 transition-colors duration-300">RANKING</a></li>
-              <li><a href="/" className="hover:text-gray-400 transition-colors duration-300">DAFTAR MANGA</a></li>
-              <li><a href="/" className="hover:text-gray-400 transition-colors duration-300">CREATORS</a></li>
-              <li><a href="/" className="hover:text-gray-400 transition-colors duration-300">ABOUT US</a></li>
+              <li><a href="/unggulan" className="hover:text-gray-400 transition-colors duration-300">UNGGULAN</a></li>
+              <li><a href="/ranking" className="hover:text-gray-400 transition-colors duration-300">RANKING</a></li>
+              <li><a href="/register-manga" className="hover:text-gray-400 transition-colors duration-300">DAFTAR MANGA</a></li>
+              <li><a href="/creators" className="hover:text-gray-400 transition-colors duration-300">CREATORS</a></li>
+              <li><a href="/about" className="hover:text-gray-400 transition-colors duration-300">ABOUT US</a></li>
             </ul>
           </nav>
 
