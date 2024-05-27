@@ -11,11 +11,11 @@ import {
 
 export default function Header() {
   return (
-    <header className="flex bg-gray-800 text-white p-4 justify-between items-center fixed top-0 left-0 w-full">
+    <header className="flex bg-gray-800 text-white p-4 justify-between items-center absolute top-0 left-0 w-full mt-32">
       <a href="/">
         <Image src="/skull.avif" alt="Logo" width={100} height={100} />
       </a>
-      <nav className="flex-grow m-2 w-[30%] overflow-x-scroll custom-scrollbar">
+      <nav className="flex-grow m-2 w-[30%] overflow-auto scrollbar">
         <ul className="flex space-x-10 text-lg uppercase">
           <li className="min-w-[fit-content]">
             <a
