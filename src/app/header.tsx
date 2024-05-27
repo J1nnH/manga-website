@@ -13,7 +13,7 @@ export default function Header() {
   return (
     <header className="flex bg-gray-800 text-white p-4 justify-between items-center w-full">
       <a href="/">
-        <Image src="/skull.avif" alt="Logo" width={100} height={100} />
+        <Image src="/manga.png" alt="Logo" width={100} height={100} />
       </a>
       <nav className="flex-grow m-2 w-[30%] overflow-auto scrollbar">
         <ul className="flex space-x-10 text-lg uppercase">
@@ -35,7 +35,7 @@ export default function Header() {
           </li>
           <li className="min-w-[fit-content]">
             <a
-              href="/"
+              href="/ranking"
               className="hover:text-gray-400 transition-colors duration-300"
             >
               ranking
