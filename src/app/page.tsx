@@ -21,7 +21,7 @@ export default async function Home() {
           {latestUpdates.results.map(async (manga) => {
             const mangaInfo = await mangadex.fetchMangaInfo(manga.id);
             return (
-              <Link href={`manga/${manga.id}`} className="relative">
+              <Link href={`manga/${manga.id}`} className="relative" key={manga.id}>
                 <Image
                   unoptimized
                   width={200}
@@ -52,7 +52,7 @@ export default async function Home() {
         <h1 className="font-bold texte-xl my-4">Trending Now</h1>
         {popular.results.map((manga, index) => {
           return (
-            <Link href={`manga/${manga.id}`} className="bg-orange-400 px-1">
+            <Link href={`manga/${manga.id}`} className="bg-orange-400 px-1" key={manga.id}>
               <h1 className="line-clamp-1">
                 {index + 1}. {manga.title as string}
               </h1>
