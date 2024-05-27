@@ -7,7 +7,7 @@ export default async function Home() {
   const latestUpdates = await mangadex.fetchLatestUpdates();
   const popular = await mangadex.fetchPopular();
   return (
-    <main className="min-h-screen flex flex-col md:flex-row">
+    <main className="min-h-screen flex flex-col md:flex-row bg-slate-900 text-white">
       {/* Latest Updates */}
       <div className="p-6 w-full md:w-2/3 relative">
         <div className="my-4">
