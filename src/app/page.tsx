@@ -48,11 +48,11 @@ export default async function Home() {
         </div>
       </div>
       {/* Popular Manga */}
-      <div className="flex flex-col py-6 w-full md:w-1/3">
-        <h1 className="font-bold texte-xl">Trending Now</h1>
+      <div className="flex flex-col py-6 px-4 w-full md:w-1/3 gap-2">
+        <h1 className="font-bold texte-xl my-4">Trending Now</h1>
         {popular.results.map((manga, index) => {
           return (
-            <Link href={`manga/${manga.id}`} className="bg-orange-400">
+            <Link href={`manga/${manga.id}`} className="bg-orange-400 px-1">
               <h1 className="line-clamp-1">
                 {index + 1}. {manga.title as string}
               </h1>
