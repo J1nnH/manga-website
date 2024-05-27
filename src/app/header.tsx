@@ -11,7 +11,7 @@ import {
 
 export default function Header() {
   return (
-    <header className="flex bg-gray-800 text-white p-4 justify-between items-center absolute top-0 left-0 w-full mt-32">
+    <header className="flex bg-gray-800 text-white p-4 justify-between items-center w-full">
       <a href="/">
         <Image src="/skull.avif" alt="Logo" width={100} height={100} />
       </a>
