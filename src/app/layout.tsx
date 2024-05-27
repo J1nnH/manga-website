@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Image from "next/image";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -16,7 +17,51 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <header className="flex bg-gray-800 text-white p-4 container mx-auto justify-between items-center">
+          <a href="/"><Image src="/skull.avif" alt="Logo" width={100} height={100} /></a>
+          <nav className="flex-grow">
+            <ul className="flex space-x-10 text-lg">
+              <li><a href="/" className="hover:text-gray-400 transition-colors duration-300">PEMBAHARUAN</a></li>
+              <li><a href="/" className="hover:text-gray-400 transition-colors duration-300">UNGGULAN</a></li>
+              <li><a href="/" className="hover:text-gray-400 transition-colors duration-300">RANKING</a></li>
+              <li><a href="/" className="hover:text-gray-400 transition-colors duration-300">DAFTAR MANGA</a></li>
+              <li><a href="/" className="hover:text-gray-400 transition-colors duration-300">CREATORS</a></li>
+              <li><a href="/" className="hover:text-gray-400 transition-colors duration-300">ABOUT US</a></li>
+            </ul>
+          </nav>
+
+          
+          
+
+          <ul className="divide-y divide-gray-300">
+            <li className="py-2">
+              <div>
+                <input type="text" placeholder="Search for anime"  className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 text-black"/>
+              </div>
+            </li>
+            <li className="py-2">
+              <div>
+                <select className="text-black">
+                  <option value="en">English</option>
+                  <option value="ms">Bahasa Melayu</option>
+                  <option value="zh">Chinese</option>
+                </select>
+              </div>
+            </li>
+          </ul>
+        </header>
+
+
+
+        <main>{children}</main>
+        
+        <footer>
+          Footer
+        </footer>
+
+        
+      </body>
     </html>
   );
 }
