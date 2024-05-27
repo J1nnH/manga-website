@@ -2,6 +2,8 @@ import Image from "next/image";
 import { MANGA } from "@consumet/extensions";
 import Link from "next/link";
 
+export const revalidate = 3600;
+
 export default async function Home() {
   const mangadex = new MANGA.MangaDex();
   const latestUpdates = await mangadex.fetchLatestUpdates();
