@@ -1,7 +1,6 @@
 "use client";
 
 import { mangadex } from "@/components/mangaDexInstance";
-import { Console } from "console";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from 'react';
