@@ -8,7 +8,7 @@ export default function MangaGrid({
 }: {
   mangaInfo: IMangaInfo | null;
 }) {
-  return (
+  return mangaInfo ? (
     <Link
       href={`manga/${mangaInfo?.id}`}
       className="relative"
@@ -18,7 +18,7 @@ export default function MangaGrid({
         unoptimized
         width={200}
         height={400}
-        src={mangaInfo?.image as string}
+        src={(mangaInfo?.image as string) ?? ""}
         alt={mangaInfo?.title as string}
         className="aspect-[3/4] object-cover w-full"
       />
@@ -33,5 +33,7 @@ export default function MangaGrid({
         </p>
       </div>
     </Link>
+  ) : (
+    <div>Error</div>
   );
 }
