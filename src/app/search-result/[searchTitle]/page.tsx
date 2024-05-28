@@ -57,11 +57,11 @@ export default function UserSearchPage({
           );
         })}
       </div>
-      <div>
+      <div className="flex gap-3 justify-center items-center mt-3">
         <Button
           onClick={() => setPageNum((prev) => (prev === 1 ? prev : prev - 1))}
         >
-          Prevoious Page
+          Previous Page
         </Button>
         <Button onClick={() => setPageNum((prev) => prev + 1)}>
           Next Page
