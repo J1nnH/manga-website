@@ -11,7 +11,9 @@ export default async function Ranking() {
       <ul>
         {popular?.results.map(async (manga: IMangaResult, index: number) => {
           const mangaInfo = await mangadex.fetchMangaInfo(manga.id);
-          return <MangaItem mangaInfo={mangaInfo} index={index} />;
+          return (
+            <MangaItem mangaInfo={mangaInfo} index={index} key={mangaInfo.id} />
+          );
         })}
       </ul>
     </main>
