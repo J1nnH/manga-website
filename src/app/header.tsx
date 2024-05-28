@@ -63,7 +63,7 @@ export default function Header() {
                 href="/"
                 className="hover:text-gray-400 transition-colors duration-300"
               >
-                favorited
+                favorites
               </a>
             </li>
             <li className="min-w-[fit-content]">
