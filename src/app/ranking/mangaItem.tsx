@@ -19,8 +19,8 @@ export default function MangaItem({
       key={mangaInfo.id}
     >
       <Link href={`manga/${mangaInfo.id}`}>
-        <div className="flex space-x-4">
-          <div className="items-center pt-32 pl-5 pr-2 font-bold">
+        <div className="flex space-x-4 md:flex-row flex-col justify-center items-center">
+          <div className="self-start md:self-center pl-5 pr-2 font-bold">
             {index + 1}
           </div>
           <Image
