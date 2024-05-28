@@ -1,12 +1,13 @@
 "use client";
 
 import { mangadex } from "@/components/mangaDexInstance";
+import { Console } from "console";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from 'react';
 
 export default function Ranking() {
-  const popular = mangadex.fetchPopular()
+  mangadex.fetchPopular()
   .then((popular) => {
   const [isExpanded, setIsExpanded] = useState(false);
   return (
@@ -58,7 +59,7 @@ export default function Ranking() {
       </ul>
     </main>
   );
-  })
+  }).catch((err) => {console.log("this is the ERROR(by jh):" + err)})
   
 }
 
