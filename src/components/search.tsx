@@ -1,7 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -13,7 +12,7 @@ export default function Search() {
   };
 
   return (
-    <form className="flex gap-5" action="">
+    <form className="flex gap-5" action={`/search-result/${searchMangaTitle}`}>
       <label htmlFor="searchManga" className="flex w-[64px]">
         <Image
           src="/magnifier.png"
