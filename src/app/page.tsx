@@ -35,7 +35,7 @@ export default async function Home() {
           return (
             <Link
               href={`manga/${manga.id}`}
-              className="bg-orange-400 px-1"
+              className="border-2 border-indigo-300 rounded-lg py-1 px-2 hover:scale-105 transition-all"
               key={manga.id}
             >
               <h1 className="line-clamp-1">
