@@ -58,7 +58,7 @@ export default async function MangaPage({
               <Link
                 className="flex border border-gray-500 p-2 bg-black gap-2 rounded-lg"
                 key={chapter.id}
-                href={`manga/${mangaInfo.id}/chapter/${chapter.id}`}
+                href={`${mangaInfo.id}/chapter/${chapter.id}`}
               >
                 <h1 className="pr-2 border-r-4">
                   {chapter.chapterNumber as string}
