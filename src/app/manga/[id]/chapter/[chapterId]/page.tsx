@@ -16,7 +16,6 @@ export default async function ChapterPage({
   );
   const previousChapterIndex = (currentChapterIndex ?? -1) + 1;
   const nextChapterIndex = (currentChapterIndex ?? 1) - 1;
-  console.log(currentChapterIndex);
   return (
     <main className="min-h-screen bg-slate-900 text-white p-6 flex place-items-center flex-col">
       {/** Navigation */}
