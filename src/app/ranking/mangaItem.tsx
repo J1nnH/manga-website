@@ -12,19 +12,16 @@ export default function MangaItem({
   mangaInfo: IMangaInfo;
   index: number;
 }) {
-
-  // Initialize 2 variables using useState, default value for isExpanded is false, setIsExpanded is a setter 
+  // Initialize 2 variables using useState, default value for isExpanded is false, setIsExpanded is a setter
   const [isExpanded, setIsExpanded] = useState(false);
 
   // Return a manga section
   return (
-
     <li
       className="py-5 m-5 bg-black border border-gray-500 rounded-md"
       key={mangaInfo.id}
     >
       <div className="flex space-x-4 md:flex-row flex-col justify-center items-center">
-
         {/* The numbering for the manga */}
         <div className="self-start md:self-center pl-5 pr-2 font-bold">
           {index + 1}
@@ -42,7 +39,7 @@ export default function MangaItem({
         </Link>
 
         {/* Listing the information of the manga */}
-        <div>
+        <div className="w-3/4">
           <p>Title: {mangaInfo.title as string}</p>
           <p>Genre: {mangaInfo.genres?.join(", ")}</p>
           <p>Year: {mangaInfo.releaseDate}</p>
