@@ -15,28 +15,32 @@ export default async function MangaPage({
   return (
     <main className="min-h-screen bg-slate-900 text-white p-6">
       {/** Manga Info */}
-      <div className="flex flex-col border-white border-b-4 md:flex-row place-items-center gap-4 pb-6">
+      <div className="flex flex-col border-white border-b-4 md:flex-row place-items-center gap-6 pb-6">
         <Image
           src={mangaInfo.image as string}
           width={250}
           height={150}
           alt={mangaInfo.title as string}
         />
-        <div>
+        <div className="w-full">
           <h1 className="font-bold text-xl border-indigo-400 border-l-4 pl-4 mb-2">
             {mangaInfo.title as string}
           </h1>
-          <p>{(mangaInfo.description as { [lang: string]: string }).en}</p>
+          <p className="text-justify">
+            {(mangaInfo.description as { [lang: string]: string }).en}
+          </p>
           <div className="mt-4 border-gray-400 border-t-2 pt-2">
             <p>
               Genres:{" "}
-              {mangaInfo.genres?.length ?? 0 > 0
-                ? mangaInfo.genres?.map((genre) => (
-                    <div className="px-4 py-2 rounded-md bg-gray-400 mx-2">
-                      {genre}
-                    </div>
-                  ))
-                : "N/A"}
+              <div className="flex w-full flex-wrap">
+                {mangaInfo.genres?.length ?? 0 > 0
+                  ? mangaInfo.genres?.map((genre) => (
+                      <span className="px-2 rounded-md bg-gray-600 m-1">
+                        {genre}
+                      </span>
+                    ))
+                  : "N/A"}
+              </div>
             </p>
             <p>Released: {mangaInfo.releaseDate}</p>
             <p>Status: {mangaInfo.status}</p>
