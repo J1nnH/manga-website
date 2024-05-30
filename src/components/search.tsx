@@ -1,3 +1,5 @@
+// It has to be a client component as there are between user and browser
+
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -5,8 +7,10 @@ import Image from "next/image";
 import { useState } from "react";
 
 export default function Search() {
+  // Use to store the manga title for searching
   const [searchMangaTitle, setSearchMangaTitle] = useState<string>("");
 
+  // Update the manga title when there is a change in the user input
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchMangaTitle(e.target.value);
   };
