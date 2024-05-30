@@ -1,13 +1,12 @@
-import { MANGA } from "@consumet/extensions";
 import Image from "next/image";
 import Link from "next/link";
+import { mangadex } from "@/components/mangaDexInstance";
 
 export default async function ChapterPage({
   params,
 }: {
   params: { id: string; chapterId: string };
 }) {
-  const mangadex = new MANGA.MangaDex();
   const chapter = await mangadex.fetchChapterPages(params.chapterId);
   const mangaInfo = await mangadex.fetchMangaInfo(params.id);
   // Note that latest chapter is at index 0

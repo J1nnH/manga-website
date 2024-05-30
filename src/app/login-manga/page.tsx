@@ -3,6 +3,7 @@
 "use client";
 
 import React, { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,25 +15,29 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { LoginRegisterDetail } from "../login-manga/page";
 
-export default function RegisterManga() {
+export type LoginRegisterDetail = {
+  username: string;
+  password: string;
+};
+
+export default function LoginManga() {
   // Use to store the username and password entered by user
-  const [registerDetails, setRegisterDetails] = useState<LoginRegisterDetail>({
+  const [loginDetails, setLoginDetails] = useState<LoginRegisterDetail>({
     username: "",
     password: "",
   });
 
   // Update the username when there is a change in the input
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRegisterDetails((prev) => {
+    setLoginDetails((prev) => {
       return { ...prev, username: e.target.value };
     });
   };
 
-  // Update the password when there is a change in the input
+  // Update the password  when there is a change in the input
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRegisterDetails((prev) => {
+    setLoginDetails((prev) => {
       return { ...prev, password: e.target.value };
     });
   };
@@ -45,7 +50,7 @@ export default function RegisterManga() {
   return (
     <Card className="w-[350px] mx-auto mt-10">
       <CardHeader>
-        <CardTitle>Register</CardTitle>
+        <CardTitle>Login</CardTitle>
       </CardHeader>
       <CardContent>
         <form action={handleSubmit}>
@@ -66,17 +71,15 @@ export default function RegisterManga() {
               />
             </div>
           </div>
-          <Button type="submit" className="w-full mt-7">
-            Register
-          </Button>
+          <Button className="w-full mt-7">Login</Button>
         </form>
       </CardContent>
       <CardFooter className="flex flex-col justify-center space-y-1.5">
         <div>
-          Already have an account?{" "}
-          {/* Redirect user to login page when he already has an account */}
-          <Link className="underline hover:opacity-70" href="../login-manga">
-            Login now
+          Do not have an account?{" "}
+          {/* Redirect user to register page when he does not has an account yet */}
+          <Link className="underline hover:opacity-70" href="../register-manga">
+            Register now
           </Link>
         </div>
       </CardFooter>

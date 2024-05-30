@@ -1,6 +1,6 @@
-import { MANGA } from "@consumet/extensions";
 import Image from "next/image";
 import Link from "next/link";
+import { mangadex } from "@/components/mangaDexInstance";
 
 export const revalidate = 3600;
 
@@ -9,7 +9,6 @@ export default async function MangaPage({
 }: {
   params: { id: string };
 }) {
-  const mangadex = new MANGA.MangaDex();
   const mangaInfo = await mangadex.fetchMangaInfo(params.id);
 
   return (
@@ -35,7 +34,10 @@ export default async function MangaPage({
               <div className="flex w-full flex-wrap">
                 {mangaInfo.genres?.length ?? 0 > 0
                   ? mangaInfo.genres?.map((genre) => (
-                      <span className="px-2 rounded-md bg-gray-600 m-1">
+                      <span
+                        className="px-2 rounded-md bg-gray-600 m-1"
+                        key={genre}
+                      >
                         {genre}
                       </span>
                     ))
