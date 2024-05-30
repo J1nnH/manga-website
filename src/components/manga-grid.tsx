@@ -10,7 +10,7 @@ export default function MangaGrid({
 }) {
   return mangaInfo ? (
     <Link
-      href={`manga/${mangaInfo?.id}`}
+      href={`../manga/${mangaInfo?.id}`}
       className="relative"
       key={mangaInfo?.id}
     >
