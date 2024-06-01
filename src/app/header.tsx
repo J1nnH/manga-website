@@ -66,7 +66,7 @@ export default function Header() {
             </li>
             <li className="min-w-[fit-content]">
               <a
-                href="/"
+                href="/favourites"
                 className="hover:text-gray-400 transition-colors duration-300"
               >
                 favorites
