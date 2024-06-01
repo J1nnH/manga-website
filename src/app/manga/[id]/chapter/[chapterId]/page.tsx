@@ -7,12 +7,18 @@ export default async function ChapterPage({
 }: {
   params: { id: string; chapterId: string };
 }) {
+
+  // chapter is an array of pages
   const chapter = await mangadex.fetchChapterPages(params.chapterId);
+
+  // Fetching mangaInfo from API
   const mangaInfo = await mangadex.fetchMangaInfo(params.id);
+
   // Note that latest chapter is at index 0
   const currentChapterIndex = mangaInfo.chapters?.findIndex(
     (chapter) => chapter.id === params.chapterId
   );
+  
   const previousChapterIndex = (currentChapterIndex ?? -1) + 1;
   const nextChapterIndex = (currentChapterIndex ?? 1) - 1;
   return (

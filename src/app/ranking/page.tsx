@@ -27,7 +27,7 @@ export default async function Ranking() {
 
           // Pass the manga information to the MangaItem tag as parameter
           return (
-            <MangaItem mangaInfo={mangaInfo} index={index} key={mangaInfo.id} />
+            <MangaItem mangaInfo={mangaInfo} index={index} manga={manga} key={mangaInfo.id} />
           );
         })}
       </ul>

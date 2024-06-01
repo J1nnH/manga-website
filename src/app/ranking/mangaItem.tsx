@@ -3,14 +3,16 @@
 import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
-import { IMangaInfo } from "@consumet/extensions";
+import { IMangaInfo, IMangaResult } from "@consumet/extensions";
 
 export default function MangaItem({
   mangaInfo,
   index,
+  manga,
 }: {
   mangaInfo: IMangaInfo;
   index: number;
+  manga: IMangaResult;
 }) {
   // Initialize 2 variables using useState, default value for isExpanded is false, setIsExpanded is a setter
   const [isExpanded, setIsExpanded] = useState(false);
@@ -18,7 +20,7 @@ export default function MangaItem({
   // Return a manga section
   return (
     <li
-      className="py-5 m-5 bg-black border border-gray-500 rounded-lg"
+      className="pb-5 m-5 bg-black border border-gray-500 rounded-lg"
       key={mangaInfo.id}
     >
       <div className="flex space-y-4 md:space-x-4 md:flex-row flex-col justify-center items-center">
@@ -40,24 +42,26 @@ export default function MangaItem({
 
         {/* Listing the information of the manga */}
         <div className="w-3/4">
-          <p>Title: {mangaInfo.title as string}</p>
-          <p>Genre: {mangaInfo.genres?.join(", ")}</p>
+          <p>Title: {manga.title as string}</p>
           <p>Year: {mangaInfo.releaseDate}</p>
           <p>Status: {mangaInfo.status}</p>
+          <p>Genre: {mangaInfo.genres?.map((genre) => {
+            return <span className="px-2 rounded-md bg-gray-600 m-1">{genre}</span>
+          })}</p>
           <br />
           <hr />
-          <br />
+          
 
           {/* Making Read more and Read less function for the long description */}
           <p>Description: </p>
-          <p className={isExpanded ? "" : "line-clamp-1"}>
+          <section className={`${isExpanded ? "overflow-y-scroll" : "line-clamp-1"} h-20` }>
             {(mangaInfo.description as { en: string })?.en}
-          </p>
+          </section>
           <button
             onClick={() => setIsExpanded(!isExpanded)}
             className="text-blue-500 hover:text-blue-700"
           >
-            {isExpanded ? "Read less" : "Read more"}
+            {isExpanded ? "Disable scroll" : "Enable scroll"}
           </button>
         </div>
       </div>
