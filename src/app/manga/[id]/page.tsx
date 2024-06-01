@@ -9,6 +9,8 @@ export default async function MangaPage({
 }: {
   params: { id: string };
 }) {
+
+  // Fetching mangaInfo using the mangaID
   const mangaInfo = await mangadex.fetchMangaInfo(params.id);
 
   return (
@@ -22,12 +24,18 @@ export default async function MangaPage({
           alt={mangaInfo.title as string}
         />
         <div className="w-full">
+
+          {/* Title of the manga */}
           <h1 className="font-bold text-xl border-indigo-400 border-l-4 pl-4 mb-2">
             {mangaInfo.title as string}
           </h1>
+
+          {/* Description of the manga */}
           <p className="text-justify">
             {(mangaInfo.description as { [lang: string]: string }).en}
           </p>
+
+          {/* Genres of the manga */}
           <div className="mt-4 border-gray-400 border-t-2 pt-2">
             <p>
               Genres:{" "}
@@ -44,6 +52,8 @@ export default async function MangaPage({
                   : "N/A"}
               </div>
             </p>
+
+            {/* Others info of the manga */}
             <p>Released: {mangaInfo.releaseDate}</p>
             <p>Status: {mangaInfo.status}</p>
             <p>Total chapters: {mangaInfo.chapters?.length}</p>
@@ -53,7 +63,11 @@ export default async function MangaPage({
 
       {/** Chapter List */}
       <div className="my-4">
+
+        {/* Title of the section */}
         <h1 className="font-bold text-xl mb-4">Chapters</h1>
+
+        {/* Looping through all the chapters */}
         <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
           {mangaInfo.chapters?.map((chapter) => {
             return (
