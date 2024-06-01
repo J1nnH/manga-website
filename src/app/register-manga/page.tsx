@@ -4,6 +4,7 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Card,
   CardContent,
@@ -11,14 +12,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { LoginRegisterDetail } from "../login-manga/page";
+import { RegiserLoginType } from "../api/register-manga";
+import { registerManga } from "../api/register-manga";
+import { redirect } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function RegisterManga() {
+  const { toast } = useToast();
+
   // Use to store the username and password entered by user
-  const [registerDetails, setRegisterDetails] = useState<LoginRegisterDetail>({
+  const [registerDetails, setRegisterDetails] = useState<RegiserLoginType>({
     username: "",
     password: "",
   });
@@ -38,8 +43,22 @@ export default function RegisterManga() {
   };
 
   // Todo
-  const handleSubmit = () => {
-    return;
+  const handleSubmit = async () => {
+    const res = await registerManga(registerDetails);
+
+    if (res.status === "success") {
+      toast({
+        title: "Successful",
+        description: "Registered successfully",
+      });
+      redirect("/login-manga");
+    } else {
+      toast({
+        variant: "destructive",
+        title: res.status,
+        description: res.message,
+      });
+    }
   };
 
   return (

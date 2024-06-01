@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import Search from "@/components/search";
+import Search from "./(components)/search";
 import {
   Select,
   SelectContent,
@@ -8,6 +8,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import dynamic from "next/dynamic";
+
+const LoginRegister = dynamic(() => import("./(components)/login-register-nav"), {
+  ssr: false,
+});
 
 export default function Header() {
   return (
@@ -66,19 +71,14 @@ export default function Header() {
             </li>
             <li className="min-w-[fit-content]">
               <a
-                href="/"
+                href="/favourites"
                 className="hover:text-gray-400 transition-colors duration-300"
               >
                 favorites
               </a>
             </li>
             <li className="min-w-[fit-content]">
-              <a
-                href="/login-manga"
-                className="hover:text-gray-400 transition-colors duration-300"
-              >
-                login
-              </a>
+              <LoginRegister />
             </li>
             <li className="min-w-[fit-content]">
               <a

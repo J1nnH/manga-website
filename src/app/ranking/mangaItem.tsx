@@ -46,7 +46,7 @@ export default function MangaItem({
           <p>Year: {mangaInfo.releaseDate}</p>
           <p>Status: {mangaInfo.status}</p>
           <p>Genre: {mangaInfo.genres?.map((genre) => {
-            return <span className="px-2 rounded-md bg-gray-600 m-1">{genre}</span>
+            return <span className="px-2 rounded-md bg-gray-600 m-1" key={genre}>{genre}</span>
           })}</p>
           <br />
           <hr />

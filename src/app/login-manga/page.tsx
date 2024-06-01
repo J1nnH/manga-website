@@ -15,15 +15,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-
-export type LoginRegisterDetail = {
-  username: string;
-  password: string;
-};
+import { RegiserLoginType } from "../api/register-manga";
+import { loginManga } from "../api/login-manga";
+import { useToast } from "@/components/ui/use-toast";
+import { redirect } from "next/navigation";
+import { useCookies } from "react-cookie";
 
 export default function LoginManga() {
+  const { toast } = useToast();
+
+  const [cookie, setCookie, _] = useCookies(["userId"]);
+
   // Use to store the username and password entered by user
-  const [loginDetails, setLoginDetails] = useState<LoginRegisterDetail>({
+  const [loginDetails, setLoginDetails] = useState<RegiserLoginType>({
     username: "",
     password: "",
   });
@@ -42,9 +46,29 @@ export default function LoginManga() {
     });
   };
 
-  // Todo
-  const handleSubmit = () => {
-    return;
+  const handleSubmit = async () => {
+    const res = await loginManga(loginDetails);
+
+    if (res.status === "success") {
+      toast({
+        title: "Successful",
+        description: "Logged in successfully",
+      });
+
+      const todayDate = new Date();
+
+      todayDate.setDate(todayDate.getDate() + 31);
+
+      setCookie("userId", res.userId, { expires: todayDate });
+
+      redirect("/favourites");
+    } else {
+      toast({
+        variant: "destructive",
+        title: res.status,
+        description: res.message,
+      });
+    }
   };
 
   return (

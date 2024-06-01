@@ -1,4 +1,4 @@
-import { mangadex } from "@/components/mangaDexInstance";
+import { mangadex } from "../(components)/mangaDexInstance";
 import MangaItem from "./mangaItem";
 import { IMangaResult } from "@consumet/extensions";
 
