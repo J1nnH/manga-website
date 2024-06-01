@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { mangadex } from "@/components/mangaDexInstance";
-import MangaGrid from "@/components/manga-grid";
+import { mangadex } from "@/app/(components)/mangaDexInstance";
+import MangaGrid from "@/app/(components)/manga-grid";
 import { useState, useEffect } from "react";
 import { IMangaInfo } from "@consumet/extensions";
 import { Button } from "@/components/ui/button";

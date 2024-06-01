@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { mangadex } from "@/components/mangaDexInstance";
+import { mangadex } from "@/app/(components)/mangaDexInstance";
 
 export const revalidate = 3600;
 

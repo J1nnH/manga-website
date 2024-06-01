@@ -4,7 +4,7 @@ import type { NextRequest } from "next/server";
 export function middleware(request: NextRequest) {
   const loggedIn = request.cookies.get("userId");
 
-  if (!loggedIn){
+  if (!loggedIn) {
     return NextResponse.redirect(new URL("/login-manga", request.url));
   }
 }

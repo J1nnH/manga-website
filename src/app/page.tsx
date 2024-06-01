@@ -1,6 +1,6 @@
 import Link from "next/link";
-import MangaGrid from "@/components/manga-grid";
-import { mangadex } from "@/components/mangaDexInstance";
+import MangaGrid from "./(components)/manga-grid";
+import { mangadex } from "./(components)/mangaDexInstance";
 
 export const revalidate = 3600;
 
