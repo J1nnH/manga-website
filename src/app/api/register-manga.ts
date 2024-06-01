@@ -1,6 +1,6 @@
 "use server";
 
-import { MongoClient } from "mongodb";
+import { client } from "./mongodbClient";
 import { z } from "zod";
 import bcrypt from "bcrypt";
 
@@ -12,8 +12,6 @@ const RegisterLoginDetails = z.object({
 export type RegiserLoginType = z.infer<typeof RegisterLoginDetails>;
 
 export async function registerManga(userDetails: RegiserLoginType) {
-  const client = new MongoClient(process.env.MONGO_DB_URL as string);
-
   const result = RegisterLoginDetails.safeParse(userDetails);
 
   if (!result.success) {
@@ -36,6 +34,7 @@ export async function registerManga(userDetails: RegiserLoginType) {
     await db.insertOne({
       username: userDetails.username,
       password: hashedPassword,
+      favourites: [],
     });
 
     return { status: "success" };

@@ -1,12 +1,10 @@
 "use server";
 
-import { MongoClient } from "mongodb";
+import { client } from "./mongodbClient";
 import { RegiserLoginType } from "./register-manga";
 import bcrypt from "bcrypt";
 
 export async function loginManga(userDetails: RegiserLoginType) {
-  const client = new MongoClient(process.env.MONGO_DB_URL as string);
-
   try {
     await client.connect();
 
