@@ -60,17 +60,19 @@ export default function Header() {
         <Search />
 
         <div className="flex justify-center py-2 text-white gap-3 flex-wrap w-[15%] max-w-[250px]">
-          <Image
-            src="/language.png"
-            alt="language icon"
-            width={32}
-            height={32}
-          />
+          
           <Select defaultValue="en">
             <SelectTrigger>
+              <Image
+              src="/language.png"
+              alt="language icon"
+              width={32}
+              height={32}
+              />
               <SelectValue placeholder="Language" />
             </SelectTrigger>
             <SelectContent>
+              
               <SelectItem value="en">English</SelectItem>
               <SelectItem value="ms">Bahasa Melayu</SelectItem>
               <SelectItem value="zh">Chinese</SelectItem>
