@@ -11,13 +11,11 @@ export default function FavouritesPage() {
   const [cookie, setCookie, removeCookie] = useCookies(["userId"]);
 
   const [favourites, setFavourites] = useFavourites<string[]>(
-    cookie.userId ?? "",
+    cookie.userId ?? null,
     []
   );
 
   const [mangaInfos, setMangaInfos] = useState<IMangaInfo[]>([]);
-
-  console.log(favourites);
 
   useEffect(() => {
     const fetchMangaInfo = async () => {
@@ -33,6 +31,8 @@ export default function FavouritesPage() {
 
     fetchMangaInfo();
   }, [favourites]);
+
+  console.log(favourites);
 
   return (
     <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 text-white">

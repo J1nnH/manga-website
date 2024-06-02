@@ -61,7 +61,7 @@ export default function LoginManga() {
 
       setCookie("userId", res.userId, { expires: todayDate });
 
-      redirect("/favourites");
+      redirect("/");
     } else {
       toast({
         variant: "destructive",

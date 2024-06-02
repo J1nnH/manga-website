@@ -68,11 +68,7 @@ export default function LoveBtn({ mangaId }: { mangaId: string }) {
   };
 
   return (
-    <button
-      className="absolute bottom-[2px] right-[5px] w-[13%] hover:opacity-75 transition-opacity"
-      title="fav btn"
-      onClick={handleAddOrRemoveFavourite}
-    >
+    <button title="fav btn" onClick={handleAddOrRemoveFavourite}>
       <Image
         src={isFavourited ? "/heart-filled.png" : "/heart-unfilled.png"}
         width={7}

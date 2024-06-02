@@ -32,6 +32,7 @@ export async function loginManga(userDetails: RegiserLoginType) {
       return { status: "success", userId: data._id.toString() };
     }
   } catch (err) {
+    console.log(err);
     return { status: "Fail", message: "Internal server error" };
   } finally {
     await client.close();
