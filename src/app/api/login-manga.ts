@@ -4,18 +4,26 @@ import { MongoClient } from "mongodb";
 import { RegiserLoginType } from "./register-manga";
 import bcrypt from "bcrypt";
 
+
+
 export async function loginManga(userDetails: RegiserLoginType) {
+
+  // A new instance of MongoClient is created using the MongoDB URL from environment variables.
   const client = new MongoClient(process.env.MONGO_DB_URL as string);
 
   try {
+    // Establishes a connection to the MongoDB server.
     await client.connect();
 
+    // Selects the users collection in the MangaWebsite database.
     const db = client.db("MangaWebsite").collection("users");
 
+    // Looks for a user document with the provided username.
     const data = await db.findOne({
       username: userDetails.username,
     });
 
+    // If no user is found, the function returns a status indicating that the username does not exist.
     if (!data) {
       return {
         status: "Does not exists",
@@ -23,11 +31,17 @@ export async function loginManga(userDetails: RegiserLoginType) {
       };
     }
 
+    // Uses bcrypt to compare the provided password with the hashed password stored in the database.
     const passwordMatches = await bcrypt.compare(
       userDetails.password,
       data?.password
     );
 
+    /*
+      If the passwords do not match, it returns a status indicating that the password is incorrect.
+      
+      If the passwords match, it returns a success status along with the user's ID.
+    */
     if (!passwordMatches) {
       return { status: "Invalid", message: "Password is incorrect" };
     } else {
