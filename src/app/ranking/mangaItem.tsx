@@ -20,7 +20,7 @@ export default function MangaItem({
   // Return a manga section
   return (
     <li
-      className="pb-5 m-5 bg-black border border-gray-500 rounded-lg"
+      className="pb-5 m-5 bg-black border border-gray-500 rounded-lg hover:scale-105 transition-all"
       key={mangaInfo.id}
     >
       <div className="flex space-y-4 md:space-x-4 md:flex-row flex-col justify-center items-center">

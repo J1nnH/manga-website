@@ -14,6 +14,8 @@ const LoginRegister = dynamic(() => import("./(components)/login-register-nav"),
   ssr: false,
 });
 
+const navigation = ["manga", "ranking","favorites", "login", "about"];
+
 export default function Header() {
   return (
     <header className="flex flex-col bg-gray-800 text-white p-4 justify-between items-center w-full">
@@ -27,70 +29,29 @@ export default function Header() {
             priority={true}
           />
         </a>
-        <nav className="flex-grow m-2 w-[30%] overflow-auto scrollbar">
+        <nav className="flex-grow m-2 w-[30%] overflow-auto scrollbar ml-20">
           <ul className="flex space-x-10 text-lg uppercase">
-            <li className="min-w-[fit-content]">
-              <a
-                href="/"
-                className="hover:text-gray-400 transition-colors duration-300"
-              >
-                updates
-              </a>
-            </li>
-            <li className="min-w-[fit-content]">
-              <a
-                href="/"
-                className="hover:text-gray-400 transition-colors duration-300"
-              >
-                featured
-              </a>
-            </li>
-            <li className="min-w-[fit-content]">
-              <a
-                href="/ranking"
-                className="hover:text-gray-400 transition-colors duration-300"
-              >
-                ranking
-              </a>
-            </li>
-            <li className="min-w-[fit-content]">
-              <a
-                href="/"
-                className="hover:text-gray-400 transition-colors duration-300"
-              >
-                manga
-              </a>
-            </li>
-            <li className="min-w-[fit-content]">
-              <a
-                href="/"
-                className="hover:text-gray-400 transition-colors duration-300"
-              >
-                creators
-              </a>
-            </li>
-            <li className="min-w-[fit-content]">
-              <a
-                href="/favourites"
-                className="hover:text-gray-400 transition-colors duration-300"
-              >
-                favorites
-              </a>
-            </li>
-            <li className="min-w-[fit-content]">
-              <LoginRegister />
-            </li>
-            <li className="min-w-[fit-content]">
-              <a
-                href="/about"
-                className="hover:text-gray-400 transition-colors duration-300"
-              >
-                about
-              </a>
-            </li>
+            {
+              navigation.map((title) => {
+                const path = `/${title}`
+                return(
+                  <li className="min-w-[fit-content]">
+                  <a
+                    href={path}
+                    className="hover:text-gray-400 transition-colors duration-300"
+                  >
+                    {title}
+                  </a>
+                </li>
+                );
+              })
+            }
           </ul>
         </nav>
-        <li className="flex justify-center py-2 text-white gap-3 flex-wrap w-[15%] max-w-[250px]">
+
+        <Search />
+
+        <div className="flex justify-center py-2 text-white gap-3 flex-wrap w-[15%] max-w-[250px]">
           <Image
             src="/language.png"
             alt="language icon"
@@ -107,13 +68,14 @@ export default function Header() {
               <SelectItem value="zh">Chinese</SelectItem>
             </SelectContent>
           </Select>
-        </li>
+        </div>
+        
       </div>
-      <ul className="divide-y divide-gray-300 flex gap-5">
-        <li className="flex ustify-center py-2">
+      {/* <ul className="divide-y divide-gray-300 flex gap-5">
+        <li className="flex justify-center py-2">
           <Search />
         </li>
-      </ul>
+      </ul> */}
     </header>
   );
 }
