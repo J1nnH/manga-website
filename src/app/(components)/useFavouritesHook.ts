@@ -3,6 +3,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { getFavourite } from "../api/get-favourite";
 
+// Custom hook for user favourited manga id
 export const useFavourites = <T>(
   userId: string,
   initialState: T

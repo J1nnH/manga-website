@@ -22,8 +22,10 @@ import { redirect } from "next/navigation";
 import { useCookies } from "react-cookie";
 
 export default function LoginManga() {
+  // For modal
   const { toast } = useToast();
 
+  // Used to set cookie once the login is successfull
   const [cookie, setCookie, _] = useCookies(["userId"]);
 
   // Use to store the username and password entered by user
@@ -47,22 +49,27 @@ export default function LoginManga() {
   };
 
   const handleSubmit = async () => {
+    // Pass the login details to loginManga function
     const res = await loginManga(loginDetails);
 
+    // The function execute successfully
     if (res.status === "success") {
       toast({
         title: "Successful",
         description: "Logged in successfully",
       });
 
+      // Set the cookie expired date to 31 days
       const todayDate = new Date();
 
       todayDate.setDate(todayDate.getDate() + 31);
 
       setCookie("userId", res.userId, { expires: todayDate });
 
+      // Redirect user back to homepage
       redirect("/");
     } else {
+      // The function return error
       toast({
         variant: "destructive",
         title: res.status,

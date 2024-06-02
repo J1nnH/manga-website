@@ -17,8 +17,10 @@ export default function UserSearchPage({
 
   const [isLoading, setIsLoading] = useState(true);
 
+  // Store curr page number
   const [pageNum, setPageNum] = useState<number>(1);
 
+  // Store all manga details
   const [mangaDetails, setMangaDetails] = useState<{
     [mangaId: string]: IMangaInfo;
   }>({});
