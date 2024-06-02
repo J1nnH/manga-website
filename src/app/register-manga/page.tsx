@@ -42,15 +42,18 @@ export default function RegisterManga() {
     });
   };
 
-  // Todo
   const handleSubmit = async () => {
+    // Send the register details to server action
     const res = await registerManga(registerDetails);
 
+    // The function executed successfully
     if (res.status === "success") {
       toast({
         title: "Successful",
         description: "Registered successfully",
       });
+
+      // Redirect user to login page
       redirect("/login-manga");
     } else {
       toast({

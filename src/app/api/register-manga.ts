@@ -1,6 +1,6 @@
 "use server";
 
-import { MongoClient } from "mongodb";
+import { client } from "./mongodbClient";
 import { z } from "zod";
 import bcrypt from "bcrypt";
 
@@ -10,21 +10,17 @@ const RegisterLoginDetails = z.object({
   password: z.string().trim().min(1, { message: "Password is required" }),
 });
 
-// Defines a type "RegiserLoginType" based on "RegisterLoginDetails" and EXPORT it
+// Defines a type "RegiserLoginType" based on "RegisterLoginDetails" and EXPORT it for frontend to use
 export type RegiserLoginType = z.infer<typeof RegisterLoginDetails>;
 
 // EXPORT the function
 export async function registerManga(userDetails: RegiserLoginType) {
-
-  // Create instance of MongoDB client using URL stored in the environment variable
-  const client = new MongoClient(process.env.MONGO_DB_URL as string);
-
+  
   // Validate the userDetails against RegisterLoginDetails, if fails, error message is returned
   const result = RegisterLoginDetails.safeParse(userDetails);
   if (!result.success) {
     return { status: "Required", message: "Username or password is empty" };
   }
-
 
   try {
     // Establish connection to the MongoDB server
@@ -46,11 +42,16 @@ export async function registerManga(userDetails: RegiserLoginType) {
     await db.insertOne({
       username: userDetails.username,
       password: hashedPassword,
+      favourites: [],
     });
-    return { status: "success" };
+
+    // Return success message
+    return { status: "success", message: "User is successfully created" };
+
   } catch (error) {
     return { status: "Fail", message: "Internal server error" };
   } finally {
+    // Close the client
     await client.close();
   }
 }

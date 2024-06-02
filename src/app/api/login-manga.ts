@@ -1,16 +1,12 @@
 "use server";
 
-import { MongoClient } from "mongodb";
+import { client } from "./mongodbClient";
 import { RegiserLoginType } from "./register-manga";
 import bcrypt from "bcrypt";
 
 
 
 export async function loginManga(userDetails: RegiserLoginType) {
-
-  // A new instance of MongoClient is created using the MongoDB URL from environment variables.
-  const client = new MongoClient(process.env.MONGO_DB_URL as string);
-
   try {
     // Establishes a connection to the MongoDB server.
     await client.connect();
@@ -23,6 +19,7 @@ export async function loginManga(userDetails: RegiserLoginType) {
       username: userDetails.username,
     });
 
+
     // If no user is found, the function returns a status indicating that the username does not exist.
     if (!data) {
       return {
@@ -30,6 +27,7 @@ export async function loginManga(userDetails: RegiserLoginType) {
         message: "Username does not exist",
       };
     }
+
 
     // Uses bcrypt to compare the provided password with the hashed password stored in the database.
     const passwordMatches = await bcrypt.compare(
@@ -48,6 +46,7 @@ export async function loginManga(userDetails: RegiserLoginType) {
       return { status: "success", userId: data._id.toString() };
     }
   } catch (err) {
+    console.log(err);
     return { status: "Fail", message: "Internal server error" };
   } finally {
     await client.close();
