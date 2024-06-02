@@ -16,7 +16,7 @@ export default function Search() {
   };
 
   return (
-    <form className="flex gap-5 mr-60" action={`/search-result/${searchMangaTitle}`}>
+    <form className="flex gap-5 mr-50" action={`/search-result/${searchMangaTitle}`}>
       <label htmlFor="searchManga" className="flex w-[64px]">
         <Image
           src="/magnifier.png"

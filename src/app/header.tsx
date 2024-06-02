@@ -30,7 +30,7 @@ export default function Header() {
           />
         </a>
         <nav className="flex-grow m-2 w-[30%] overflow-auto scrollbar ml-20">
-          <ul className="flex space-x-10 text-lg uppercase">
+          <ul className="flex text-lg uppercase space-x-2">
             {
               navigation.map((title) => {
                 
@@ -43,14 +43,13 @@ export default function Header() {
 
 
                 return(
-                  <li className="min-w-[fit-content]">
-                  <a
-                    href={path}
-                    className="hover:text-gray-400 transition-colors duration-300"
-                  >
+                  <li 
+                  className="relative min-w-[fit-content] py-10 px-5 transition-all cursor-pointer group hover:text-gray-400">
+                  <a href={path}>
+                    <span className="absolute inset-x-0 bottom-0 h-1 bg-transparent group-hover:bg-gray-400 transition-all"></span>
                     {title}
                   </a>
-                </li>
+                  </li>
                 );
               })
             }

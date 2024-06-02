@@ -34,6 +34,9 @@ const config = {
       },
     },
     extend: {
+      margin: {
+        '50': '10rem'
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
