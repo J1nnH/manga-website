@@ -14,7 +14,7 @@ const LoginRegister = dynamic(() => import("./(components)/login-register-nav"),
   ssr: false,
 });
 
-const navigation = ["manga", "ranking","favorites", "login", "about"];
+const navigation = ["manga", "ranking","favourites", "login", "about"];
 
 export default function Header() {
   return (
@@ -33,7 +33,15 @@ export default function Header() {
           <ul className="flex space-x-10 text-lg uppercase">
             {
               navigation.map((title) => {
-                const path = `/${title}`
+                
+                let path = `/${title}`
+                if(title == "manga"){
+                  path = "/";
+                }else if (title == "login"){
+                  path = `/${title}-manga`;
+                }
+
+
                 return(
                   <li className="min-w-[fit-content]">
                   <a
