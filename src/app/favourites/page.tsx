@@ -10,6 +10,8 @@ import MangaGrid from "../(components)/manga-grid";
 export default function FavouritesPage() {
   const [cookie, setCookie, removeCookie] = useCookies(["userId"]);
 
+  const [isLoading, setIsLoading] = useState(true);
+
   const [favourites, setFavourites] = useFavourites<string[]>(
     cookie.userId ?? null,
     []
@@ -19,6 +21,8 @@ export default function FavouritesPage() {
 
   useEffect(() => {
     const fetchMangaInfo = async () => {
+      setIsLoading(true);
+
       const mangaInfos = favourites.map(async (fav) => {
         const mangaInfo = await mangadex.fetchMangaInfo(fav);
         return mangaInfo;
@@ -27,18 +31,26 @@ export default function FavouritesPage() {
       const finishedFetched = await Promise.all(mangaInfos);
 
       setMangaInfos(finishedFetched);
+
+      setIsLoading(false);
     };
 
     fetchMangaInfo();
   }, [favourites]);
 
-  console.log(favourites);
-
   return (
-    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 text-white">
-      {mangaInfos.map((mangaInfo) => {
-        return <MangaGrid mangaInfo={mangaInfo} key={mangaInfo.id} />;
-      })}
-    </div>
+    <>
+      {isLoading ? (
+        <div>Contents are loading...</div>
+      ) : favourites.length === 0 ? (
+        <div>Favourites are empty</div>
+      ) : (
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 text-white">
+          {mangaInfos.map((mangaInfo) => {
+            return <MangaGrid mangaInfo={mangaInfo} key={mangaInfo.id} />;
+          })}
+        </div>
+      )}
+    </>
   );
 }
