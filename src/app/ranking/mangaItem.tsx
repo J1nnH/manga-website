@@ -24,7 +24,7 @@ export default function MangaItem({
       className="p-5 bg-black border border-gray-500 rounded-lg relative hover:scale-105 transition-all w-full"
       key={mangaInfo.id}
     >
-      <div className="flex space-y-4 md:space-x-4 md:flex-row flex-col items-center flex-wrap">
+      <div className="flex space-y-4 md:space-x-4 md:flex-row flex-col justify-center place-items-center">
         {/* The numbering for the manga */}
         <div className="self-start md:self-center pl-5 pr-2 font-bold text-3xl">
           {index + 1}
