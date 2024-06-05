@@ -16,7 +16,10 @@ export default function Search() {
   };
 
   return (
-    <form className="flex gap-5 mr-50" action={`/search-result/${searchMangaTitle}`}>
+    <form
+      className="flex gap-5 mr-50"
+      action={`/search-result/${searchMangaTitle}`}
+    >
       <label htmlFor="searchManga" className="flex w-[64px]">
         <Image
           src="/magnifier.png"
@@ -29,7 +32,7 @@ export default function Search() {
       <Input
         id="searchManga"
         type="text"
-        placeholder="Search for anime ..."
+        placeholder="Search for manga.."
         className="bg-transparent text-md"
         value={searchMangaTitle}
         onChange={(e) => handleChangeTitle(e)}

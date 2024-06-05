@@ -21,10 +21,10 @@ export default function MangaItem({
   // Return a manga section
   return (
     <li
-      className="pb-5 m-5 bg-black border border-gray-500 rounded-lg relative hover:scale-105 transition-all"
+      className="pb-5 bg-black border border-gray-500 rounded-lg relative hover:scale-105 transition-all w-full"
       key={mangaInfo.id}
     >
-      <div className="flex space-y-4 md:space-x-4 md:flex-row flex-col justify-center items-center">
+      <div className="flex space-y-4 md:space-x-4 md:flex-row flex-col items-center">
         {/* The numbering for the manga */}
         <div className="self-start md:self-center pl-5 pr-2 font-bold text-3xl">
           {index + 1}
@@ -46,7 +46,7 @@ export default function MangaItem({
           <p>Title: {manga.title as string}</p>
           <p>Year: {mangaInfo.releaseDate}</p>
           <p>Status: {mangaInfo.status}</p>
-          <p>
+          <div className="flex flex-wrap w-full">
             Genre:{" "}
             {mangaInfo.genres?.map((genre) => {
               return (
@@ -55,7 +55,7 @@ export default function MangaItem({
                 </span>
               );
             })}
-          </p>
+          </div>
           <br />
           <hr />
 
@@ -63,8 +63,8 @@ export default function MangaItem({
           <p>Description: </p>
           <section
             className={`${
-              isExpanded ? "overflow-y-scroll" : "line-clamp-1"
-            } h-20`}
+              isExpanded ? "overflow-y-scroll h-20" : "line-clamp-1"
+            } `}
           >
             {(mangaInfo.description as { en: string })?.en}
           </section>
