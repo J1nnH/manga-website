@@ -46,7 +46,7 @@ export default function Header() {
                   
                   <a href={path}>
                   <li 
-                  className="relative min-w-[fit-content] py-10 px-5 transition-all cursor-pointer group hover:text-gray-400 active:bg-gray-700">
+                  className="relative min-w-[fit-content] py-10 px-5 transition-all cursor-pointer group hover:text-gray-400 active:bg-gray-700 rounded-lg">
                     <span className="absolute inset-x-0 bottom-0 h-1 bg-transparent group-hover:bg-gray-400 transition-all"></span>
                     {title}
                   </li>
