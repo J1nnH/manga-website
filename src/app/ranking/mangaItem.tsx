@@ -21,10 +21,10 @@ export default function MangaItem({
   // Return a manga section
   return (
     <li
-      className="pb-5 bg-black border border-gray-500 rounded-lg relative hover:scale-105 transition-all w-full"
+      className="p-5 bg-black border border-gray-500 rounded-lg relative hover:scale-105 transition-all w-full"
       key={mangaInfo.id}
     >
-      <div className="flex space-y-4 md:space-x-4 md:flex-row flex-col items-center">
+      <div className="flex space-y-4 md:space-x-4 md:flex-row flex-col items-center flex-wrap">
         {/* The numbering for the manga */}
         <div className="self-start md:self-center pl-5 pr-2 font-bold text-3xl">
           {index + 1}

@@ -16,7 +16,7 @@ export default async function Ranking() {
       <h1 className="text-xl font-bold inline pl-6">Most Popular</h1>
 
       {/* Looping through each each manga, then return the manga */}
-      <ul className="grid gap-5">
+      <ul className="grid gap-5 grid-cols-1">
         {popular?.results.map(async (manga: IMangaResult, index: number) => {
           // Fetching manga info from the API base on the manga id
           const mangaInfo = await mangadex.fetchMangaInfo(manga.id);
