@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Search from "./(components)/search";
 import {
@@ -12,7 +12,8 @@ import {
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
-
+import { useCookies } from "react-cookie";
+import { useRouter } from "next/navigation";
 
 const LoginRegister = dynamic(
   () => import("./(components)/login-register-nav"),
@@ -22,17 +23,24 @@ const LoginRegister = dynamic(
 );
 
 const navigation = [
-  {path: "/", key: "nav1", title: "manga"},
-  {path: "/ranking", key: "nav2", title: "ranking"},
-  {path: "/favourites", key: "nav3", title: "favourites"},
-  {path: "/login-manga", key: "nav4", title: "login"},
-  {path: "/about", key: "nav5", title: "about"},
-]
+  { path: "/", key: "nav1", title: "manga" },
+  { path: "/ranking", key: "nav2", title: "ranking" },
+  { path: "/favourites", key: "nav3", title: "favourites" },
+  { path: "/login-manga", key: "nav4", title: "login" },
+  { path: "/", key: "nav6", title: "logout" },
+  { path: "/about", key: "nav5", title: "about" },
+];
 
 export default function Header() {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [cookie, setCookie, removeCookie] = useCookies(["userId"]);
+  const router = useRouter();
 
+  const handleLogout = () => {
+    removeCookie("userId");
+    router.push("/");
+  };
 
   return (
     <header className="flex flex-col bg-gray-800 text-white px-2 w-full">
@@ -58,14 +66,30 @@ export default function Header() {
         <nav className="flex-grow m-2 w-[30%] overflow-auto scrollbar hidden md:block">
           <ul className="text-lg uppercase space-x-2 flex">
             {navigation.map((nav) => {
-              return (
-                <Link href={nav.path}>
-                  <li className="relative min-w-[fit-content] py-0 px-2 transition-all cursor-pointer group hover:text-gray-400 active:bg-gray-700 rounded-lg">
+              if (
+                (nav.key === "nav4" && !cookie.userId) ||
+                (nav.key !== "nav4" && nav.key !== "nav6")
+              ) {
+                return (
+                  <Link href={nav.path} key={nav.key}>
+                    <li className="relative min-w-[fit-content] py-0 px-2 transition-all cursor-pointer group hover:text-gray-400 active:bg-gray-700 rounded-lg">
+                      <span className="absolute inset-x-0 bottom-0 h-1 bg-transparent group-hover:bg-gray-400 transition-all"></span>
+                      {t(nav.key)}
+                    </li>
+                  </Link>
+                );
+              } else if (nav.key === "nav6" && cookie.userId) {
+                return (
+                  <button
+                    key={nav.key}
+                    onClick={handleLogout}
+                    className="relative min-w-[fit-content] py-0 px-2 transition-all cursor-pointer group hover:text-gray-400 active:bg-gray-700 rounded-lg uppercase"
+                  >
                     <span className="absolute inset-x-0 bottom-0 h-1 bg-transparent group-hover:bg-gray-400 transition-all"></span>
                     {t(nav.key)}
-                  </li>
-                </Link>
-              );
+                  </button>
+                );
+              }
             })}
           </ul>
         </nav>
@@ -121,13 +145,41 @@ export default function Header() {
 
             <ul className="gap-4 grid grid-cols-1">
               {navigation.map((nav) => {
-                return (
-                  <Link href={nav.path} onClick={() => setIsMenuOpen(false)}>
-                    <li className="text-xl uppercase border-l-indigo-500 border-l-4 pl-2">
+                if (nav.key === "nav4" && !cookie.userId) {
+                  return (
+                    <Link
+                      href={nav.path}
+                      onClick={() => setIsMenuOpen(false)}
+                      key={nav.key}
+                    >
+                      <li className="text-xl uppercase border-l-indigo-500 border-l-4 pl-2">
+                        {t(nav.key)}
+                      </li>
+                    </Link>
+                  );
+                } else if (nav.key === "nav6" && cookie.userId) {
+                  return (
+                    <button
+                      key={nav.key}
+                      className="text-xl uppercase border-l-indigo-500 border-l-4 pl-2 text-justify"
+                      onClick={handleLogout}
+                    >
                       {t(nav.key)}
-                    </li>
-                  </Link>
-                );
+                    </button>
+                  );
+                } else if (nav.key !== "nav4" && nav.key !== "nav6") {
+                  return (
+                    <Link
+                      href={nav.path}
+                      onClick={() => setIsMenuOpen(false)}
+                      key={nav.key}
+                    >
+                      <li className="text-xl uppercase border-l-indigo-500 border-l-4 pl-2">
+                        {t(nav.key)}
+                      </li>
+                    </Link>
+                  );
+                }
               })}
             </ul>
           </nav>
