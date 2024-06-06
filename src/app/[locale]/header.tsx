@@ -32,7 +32,6 @@ const navigation = [
 export default function Header() {
   const {t} = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navigationTitle = [`${t("nav1")}`, `${t("nav2")}`, `${t("nav3")}`, `${t("nav4")}`, `${t("nav5")}`];
 
 
   return (
@@ -121,18 +120,11 @@ export default function Header() {
             </div>
 
             <ul className="gap-4 grid grid-cols-1">
-              {navigation.map((title) => {
-                let path = `/${title}`;
-                if (title == "manga") {
-                  path = "/";
-                } else if (title == "login") {
-                  path = `/${title}-manga`;
-                }
-
+              {navigation.map((nav) => {
                 return (
-                  <Link href={path} onClick={() => setIsMenuOpen(false)}>
+                  <Link href={nav.path} onClick={() => setIsMenuOpen(false)}>
                     <li className="text-xl uppercase border-l-indigo-500 border-l-4 pl-2">
-                      {title}
+                      {t(nav.key)}
                     </li>
                   </Link>
                 );
