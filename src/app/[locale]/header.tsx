@@ -87,10 +87,12 @@ export default function Header() {
                     key={nav.key}
                     className="relative min-w-[fit-content] py-0 px-2 transition-all cursor-pointer group hover:text-gray-400 active:bg-gray-700 rounded-lg uppercase"
                   >
-                    <button onClick={handleLogout} className="uppercase">
-                      <span className="absolute inset-x-0 bottom-0 h-1 bg-transparent group-hover:bg-gray-400 transition-all"></span>
-                      {t(nav.key)}
-                    </button>
+                    <form action={handleLogout}>
+                      <button type="submit" className="uppercase">
+                        <span className="absolute inset-x-0 bottom-0 h-1 bg-transparent group-hover:bg-gray-400 transition-all"></span>
+                        {t(nav.key)}
+                      </button>
+                    </form>
                   </li>
                 );
               }
