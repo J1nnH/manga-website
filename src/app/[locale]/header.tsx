@@ -165,13 +165,20 @@ export default function Header() {
                   );
                 } else if (nav.key === "nav6" && cookie.userId) {
                   return (
-                    <button
+                    <li
                       key={nav.key}
                       className="text-xl uppercase border-l-indigo-500 border-l-4 pl-2 text-justify"
-                      onClick={handleLogout}
                     >
-                      {t(nav.key)}
-                    </button>
+                      <form action={handleLogout}>
+                        <button
+                          key={nav.key}
+                          className="uppercase"
+                          onClick={handleLogout}
+                        >
+                          {t(nav.key)}
+                        </button>
+                      </form>
+                    </li>
                   );
                 } else if (nav.key !== "nav4" && nav.key !== "nav6") {
                   return (
