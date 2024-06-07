@@ -5,5 +5,7 @@
   "nav3": "favourites",
   "nav4": "login",
   "nav5": "about",
-  "nav6": "logout"
+  "nav6": "logout",
+  "search": "Search",
+  "searchPlace": "Search for manga.."
 }
