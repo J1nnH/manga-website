@@ -71,23 +71,27 @@ export default function Header() {
                 (nav.key !== "nav4" && nav.key !== "nav6")
               ) {
                 return (
-                  <Link href={nav.path} key={nav.key}>
-                    <li className="relative min-w-[fit-content] py-0 px-2 transition-all cursor-pointer group hover:text-gray-400 active:bg-gray-700 rounded-lg">
+                  <li key={nav.key}>
+                    <Link
+                      href={nav.path}
+                      className="relative min-w-[fit-content] py-0 px-2 transition-all cursor-pointer group hover:text-gray-400 active:bg-gray-700 rounded-lg"
+                    >
                       <span className="absolute inset-x-0 bottom-0 h-1 bg-transparent group-hover:bg-gray-400 transition-all"></span>
                       {t(nav.key)}
-                    </li>
-                  </Link>
+                    </Link>
+                  </li>
                 );
               } else if (nav.key === "nav6" && cookie.userId) {
                 return (
-                  <button
+                  <li
                     key={nav.key}
-                    onClick={handleLogout}
                     className="relative min-w-[fit-content] py-0 px-2 transition-all cursor-pointer group hover:text-gray-400 active:bg-gray-700 rounded-lg uppercase"
                   >
-                    <span className="absolute inset-x-0 bottom-0 h-1 bg-transparent group-hover:bg-gray-400 transition-all"></span>
-                    {t(nav.key)}
-                  </button>
+                    <button onClick={handleLogout} className="uppercase">
+                      <span className="absolute inset-x-0 bottom-0 h-1 bg-transparent group-hover:bg-gray-400 transition-all"></span>
+                      {t(nav.key)}
+                    </button>
+                  </li>
                 );
               }
             })}
