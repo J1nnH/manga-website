@@ -13,7 +13,6 @@ export default async function Favourites({
     params.locale,
     i18nNamespaces
   );
-
   return (
     <TranslationProvider
       resources={resources}
