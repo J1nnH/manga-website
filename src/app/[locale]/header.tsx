@@ -14,6 +14,7 @@ import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { useCookies } from "react-cookie";
 import { useRouter } from "next/navigation";
+import LanguageChanger from "./(components)/LanguageChanger";
 
 const LoginRegister = dynamic(
   () => import("./(components)/login-register-nav"),
@@ -101,9 +102,9 @@ export default function Header() {
         </nav>
 
         {/** Search bar */}
-        <Search />
+        <Search placeholder={t("searchPlace")} lbl={t("search")}/>
 
-        <div className="flex justify-center py-2 text-white gap-3 flex-wrap w-[15%] max-w-[250px]">
+        {/* <div className="flex justify-center py-2 text-white gap-3 flex-wrap w-[15%] max-w-[250px]">
           <Select defaultValue="en">
             <SelectTrigger>
               <Image
@@ -120,7 +121,8 @@ export default function Header() {
               <SelectItem value="zh">Chinese</SelectItem>
             </SelectContent>
           </Select>
-        </div>
+        </div> */}
+        <LanguageChanger></LanguageChanger>
       </div>
       {/* <ul className="divide-y divide-gray-300 flex gap-5">
         <li className="flex justify-center py-2">
