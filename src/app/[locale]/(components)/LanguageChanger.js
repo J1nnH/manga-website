@@ -20,8 +20,7 @@ export default function LanguageChanger() {
   const router = useRouter();
   const currentPathname = usePathname();
 
-  const handleChange = e => {
-    const newLocale = e.target.value;
+  const handleChange = newLocale => {
 
     // set cookie for next-i18n-router
     const days = 30;
@@ -46,28 +45,23 @@ export default function LanguageChanger() {
   };
 
   return (
-    <select onChange={handleChange} value={currentLocale} className="text-black">
-      <option value="en">English</option>
-      <option value="ms">Bahasa Melayu</option>
-      <option value="zh">Chinese</option>
-    </select>
-//     <div className="flex justify-center py-2 text-white gap-3 flex-wrap w-[15%] max-w-[250px]">
-//     <Select defaultValue="en" onChange={handleChange} value={currentLocale}>
-//       <SelectTrigger>
-//         <Image
-//           src="/language.png"
-//           alt="language icon"
-//           width={32}
-//           height={32}
-//         />
-//         <SelectValue placeholder="Language" />
-//       </SelectTrigger>
-//       <SelectContent >
-//         <SelectItem value="en">English</SelectItem>
-//         <SelectItem value="ms">Bahasa Melayu</SelectItem>
-//         <SelectItem value="zh">Chinese</SelectItem>
-//       </SelectContent>
-//     </Select>
-//   </div>
+    <div className="flex justify-center py-2 text-white gap-3 flex-wrap w-[15%] max-w-[250px]">
+        <Select defaultValue="en" onValueChange={handleChange} value={currentLocale}>
+        <SelectTrigger>
+            <Image
+            src="/language.png"
+            alt="language icon"
+            width={32}
+            height={32}
+            />
+            <SelectValue placeholder="Language" />
+        </SelectTrigger>
+        <SelectContent >
+            <SelectItem value="en">English</SelectItem>
+            <SelectItem value="ms">Bahasa Melayu</SelectItem>
+            <SelectItem value="zh">Chinese</SelectItem>
+        </SelectContent>
+        </Select>
+    </div>
   );
 }
