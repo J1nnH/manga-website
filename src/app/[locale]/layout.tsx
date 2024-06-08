@@ -41,16 +41,18 @@ export default async function RootLayout({
   return (
     <html lang={params.locale}>
       <body className={inter.className}>
-        <TranslationProvider
-          resources={resources}
-          locale={params.locale}
-          namespaces={i18nNamespaces}
-        >
-          <Header />
-          <main>{children}</main>
-          <Toaster />
-          <Footer />
-        </TranslationProvider>
+        <div className="flex min-h-screen flex-col">
+          <TranslationProvider
+            resources={resources}
+            locale={params.locale}
+            namespaces={i18nNamespaces}
+          >
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Toaster />
+            <Footer />
+          </TranslationProvider>
+        </div>
       </body>
     </html>
   );
