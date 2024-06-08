@@ -5,8 +5,6 @@ import initTranslations from "../i18n";
 import TranslationProvider from "./(components)/TranslationProvider";
 import { unstable_cache } from "next/cache";
 
-export const fetchCache = "force-cache";
-export const revalidate = 3600;
 const i18nNamespaces = ["home", "common"];
 
 export default async function Home({ params }: { params: { locale: string } }) {
