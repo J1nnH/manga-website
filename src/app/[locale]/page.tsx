@@ -36,7 +36,7 @@ export default async function Home({ params }: { params: { locale: string } }) {
         {/* Latest Updates */}
         <div className="p-6 w-full md:w-2/3 relative">
           <div className="my-4">
-            <h1 className="text-xl font-bold inline">
+            <h1 className="text-xl md:text-3xl font-bold inline">
               {/* Subtitle 1 = Latest Updates */}
               {t("subtitle1")}
             </h1>
@@ -61,7 +61,7 @@ export default async function Home({ params }: { params: { locale: string } }) {
         </div>
         {/* Popular Manga */}
         <div className="flex flex-col py-6 px-4 w-full md:w-1/3 gap-4">
-          <h1 className="font-bold texte-xl my-4">
+          <h1 className="font-bold text-xl md:text-3xl mt-2">
             {/* Subtitle 3 = Trending Now */}
             {t("subtitle3")}
           </h1>
