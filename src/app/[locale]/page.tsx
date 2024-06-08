@@ -3,7 +3,9 @@ import MangaGrid from "./(components)/manga-grid";
 import { mangadex } from "./(components)/mangaDexInstance";
 import initTranslations from "../i18n";
 import TranslationProvider from "./(components)/TranslationProvider";
+import { unstable_cache } from "next/cache";
 
+export const fetchCache = "force-cache";
 export const revalidate = 3600;
 const i18nNamespaces = ["home", "common"];
 
@@ -13,8 +15,19 @@ export default async function Home({ params }: { params: { locale: string } }) {
     i18nNamespaces
   );
 
-  const latestUpdates = await mangadex.fetchLatestUpdates();
-  const popular = await mangadex.fetchPopular();
+  // Cache the latest updates and popular manga
+  const latestUpdates = await unstable_cache(
+    () => mangadex.fetchLatestUpdates(),
+    ["latest-updates"],
+    { tags: ["latest-updates"], revalidate: 3600 }
+  )();
+
+  const popular = await unstable_cache(
+    () => mangadex.fetchPopular(),
+    ["popular"],
+    { tags: ["popular"], revalidate: 3600 }
+  )();
+
   return (
     <TranslationProvider
       resources={resources}
@@ -37,7 +50,11 @@ export default async function Home({ params }: { params: { locale: string } }) {
           {/* Grid of latest updates */}
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {latestUpdates.results.map(async (manga) => {
-              const mangaInfo = await mangadex.fetchMangaInfo(manga.id);
+              const mangaInfo = await unstable_cache(
+                () => mangadex.fetchMangaInfo(manga.id),
+                [manga.id],
+                { tags: ["manga-info"], revalidate: 3600 }
+              )();
               return mangaInfo ? (
                 <MangaGrid mangaInfo={mangaInfo} key={mangaInfo.id} />
               ) : null;
