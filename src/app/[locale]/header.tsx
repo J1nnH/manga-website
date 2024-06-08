@@ -102,7 +102,7 @@ export default function Header() {
         </nav>
 
         {/** Search bar */}
-        <Search />
+        <Search placeholder={t("searchPlace")} lbl={t("search")}/>
 
         {/* <div className="flex justify-center py-2 text-white gap-3 flex-wrap w-[15%] max-w-[250px]">
           <Select defaultValue="en">
