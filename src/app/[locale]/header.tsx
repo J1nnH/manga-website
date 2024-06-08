@@ -2,26 +2,11 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Search from "./(components)/search";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { useCookies } from "react-cookie";
 import { useRouter } from "next/navigation";
 import LanguageChanger from "./(components)/LanguageChanger";
-
-const LoginRegister = dynamic(
-  () => import("./(components)/login-register-nav"),
-  {
-    ssr: false,
-  }
-);
 
 const navigation = [
   { path: "/", key: "nav1", title: "manga" },
@@ -88,12 +73,16 @@ export default function Header() {
                     key={nav.key}
                     className="relative min-w-[fit-content] py-0 px-2 transition-all cursor-pointer group hover:text-gray-400 active:bg-gray-700 rounded-lg uppercase"
                   >
-                    <form action={handleLogout}>
-                      <button type="submit" className="uppercase">
+                    <div>
+                      <button
+                        type="submit"
+                        className="uppercase"
+                        onClick={handleLogout}
+                      >
                         <span className="absolute inset-x-0 bottom-0 h-1 bg-transparent group-hover:bg-gray-400 transition-all"></span>
                         {t(nav.key)}
                       </button>
-                    </form>
+                    </div>
                   </li>
                 );
               }
@@ -102,7 +91,7 @@ export default function Header() {
         </nav>
 
         {/** Search bar */}
-        <Search placeholder={t("searchPlace")} lbl={t("search")}/>
+        <Search placeholder={t("searchPlace")} lbl={t("search")} />
 
         {/* <div className="flex justify-center py-2 text-white gap-3 flex-wrap w-[15%] max-w-[250px]">
           <Select defaultValue="en">
@@ -153,7 +142,10 @@ export default function Header() {
 
             <ul className="gap-4 grid grid-cols-1">
               {navigation.map((nav) => {
-                if (nav.key === "nav4" && !cookie.userId) {
+                if (
+                  (nav.key === "nav4" && !cookie.userId) ||
+                  (nav.key !== "nav4" && nav.key !== "nav6")
+                ) {
                   return (
                     <Link
                       href={nav.path}
@@ -171,28 +163,16 @@ export default function Header() {
                       key={nav.key}
                       className="text-xl uppercase border-l-indigo-500 border-l-4 pl-2 text-justify"
                     >
-                      <form action={handleLogout}>
+                      <div>
                         <button
-                          key={nav.key}
                           className="uppercase"
+                          type="submit"
                           onClick={handleLogout}
                         >
                           {t(nav.key)}
                         </button>
-                      </form>
+                      </div>
                     </li>
-                  );
-                } else if (nav.key !== "nav4" && nav.key !== "nav6") {
-                  return (
-                    <Link
-                      href={nav.path}
-                      onClick={() => setIsMenuOpen(false)}
-                      key={nav.key}
-                    >
-                      <li className="text-xl uppercase border-l-indigo-500 border-l-4 pl-2">
-                        {t(nav.key)}
-                      </li>
-                    </Link>
                   );
                 }
               })}

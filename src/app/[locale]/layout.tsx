@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Header from "./header";
 import Footer from "./footer";
 import { Toaster } from "@/components/ui/toaster";
-import i18nConfig from '@/i18nConfig';
-import TranslationProvider from "./(components)/TranslationProvider"
+import i18nConfig from "@/i18nConfig";
+import TranslationProvider from "./(components)/TranslationProvider";
 import initTranslations from "../i18n";
+import dynamic from "next/dynamic";
 
-
-const i18nNamespaces = ['common'];
+const i18nNamespaces = ["common"];
 const inter = Inter({ subsets: ["latin"] });
+
+const Header = dynamic(() => import("./header"), { ssr: false });
 
 export const metadata: Metadata = {
   title: "Rush B",
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
 };
 
 export function generateStaticParams() {
-  return i18nConfig.locales.map(locale => ({ locale }));
+  return i18nConfig.locales.map((locale) => ({ locale }));
 }
 
 interface RootLayoutProps {
@@ -30,21 +31,27 @@ interface RootLayoutProps {
 
 export default async function RootLayout({
   children,
-  params
+  params,
 }: Readonly<RootLayoutProps>) {
-  const { t, resources } = await initTranslations(params.locale, i18nNamespaces);
+  const { t, resources } = await initTranslations(
+    params.locale,
+    i18nNamespaces
+  );
 
   return (
     <html lang={params.locale}>
-        <body className={inter.className}>
-        <TranslationProvider resources={resources} locale={params.locale} namespaces={i18nNamespaces}>
+      <body className={inter.className}>
+        <TranslationProvider
+          resources={resources}
+          locale={params.locale}
+          namespaces={i18nNamespaces}
+        >
           <Header />
           <main>{children}</main>
           <Toaster />
           <Footer />
         </TranslationProvider>
-        </body>
-      </html>
-
+      </body>
+    </html>
   );
 }
