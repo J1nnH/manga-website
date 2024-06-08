@@ -1,21 +1,21 @@
-"use client"
+"use client";
 
 import React from "react";
 import { IMangaInfo } from "@consumet/extensions";
 import Image from "next/image";
 import Link from "next/link";
 import LoveBtn from "./love-btn";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 export default function MangaGrid({
   mangaInfo,
 }: {
   mangaInfo: IMangaInfo | null;
 }) {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   return mangaInfo ? (
-    <div className="relative">
+    <div className="relative hover:scale-105">
       <Link
         href={`../manga/${mangaInfo?.id}`}
         className="relative"
@@ -34,7 +34,9 @@ export default function MangaGrid({
           <h1 className="text-sm line-clamp-1 font-semibold">
             {mangaInfo?.title as string}
           </h1>
-          <p className="text-xs capitalize">{t("statuslbl")}: {mangaInfo?.status}</p>
+          <p className="text-xs capitalize">
+            {t("statuslbl")}: {mangaInfo?.status}
+          </p>
           <p className="text-xs">
             {t("latestlbl")}:{" "}
             {(mangaInfo?.chapters?.[0]?.chapterNumber as string) ?? "N/A"}

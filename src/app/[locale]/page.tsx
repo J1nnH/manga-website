@@ -2,21 +2,25 @@ import Link from "next/link";
 import MangaGrid from "./(components)/manga-grid";
 import { mangadex } from "./(components)/mangaDexInstance";
 import initTranslations from "../i18n";
-import TranslationProvider from "./(components)/TranslationProvider"
-
+import TranslationProvider from "./(components)/TranslationProvider";
 
 export const revalidate = 3600;
-const  i18nNamespaces = ['home','common'];
+const i18nNamespaces = ["home", "common"];
 
-export default async function Home({params}: {params: {locale: string}}) {
-  const { t, resources } = await initTranslations(params.locale, i18nNamespaces);
-
+export default async function Home({ params }: { params: { locale: string } }) {
+  const { t, resources } = await initTranslations(
+    params.locale,
+    i18nNamespaces
+  );
 
   const latestUpdates = await mangadex.fetchLatestUpdates();
   const popular = await mangadex.fetchPopular();
   return (
-    <TranslationProvider resources={resources} locale={params.locale} namespaces={i18nNamespaces}>
-
+    <TranslationProvider
+      resources={resources}
+      locale={params.locale}
+      namespaces={i18nNamespaces}
+    >
       <main className="overflow-hidden min-h-screen flex flex-col md:flex-row bg-slate-900 text-white">
         {/* Latest Updates */}
         <div className="p-6 w-full md:w-2/3 relative">
@@ -41,7 +45,7 @@ export default async function Home({params}: {params: {locale: string}}) {
           </div>
         </div>
         {/* Popular Manga */}
-        <div className="flex flex-col py-6 px-4 w-full md:w-1/3 gap-2">
+        <div className="flex flex-col py-6 px-4 w-full md:w-1/3 gap-4">
           <h1 className="font-bold texte-xl my-4">
             {/* Subtitle 3 = Trending Now */}
             {t("subtitle3")}
