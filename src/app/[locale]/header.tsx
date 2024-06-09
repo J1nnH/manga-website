@@ -71,7 +71,7 @@ export default function Header() {
                 return (
                   <li
                     key={nav.key}
-                    className="relative min-w-[fit-content] py-0 px-2 transition-all cursor-pointer group hover:text-gray-400 active:bg-gray-700 rounded-lg uppercase"
+                    className="flex items-end relative min-w-[fit-content] py-0 px-2 transition-all cursor-pointer group hover:text-gray-400 active:bg-gray-700 rounded-lg uppercase"
                   >
                     <div>
                       <button
