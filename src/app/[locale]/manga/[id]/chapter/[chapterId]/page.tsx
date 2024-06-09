@@ -2,36 +2,37 @@ import Image from "next/image";
 import Link from "next/link";
 import { mangadex } from "@/app/[locale]/(components)/mangaDexInstance";
 import initTranslations from "@/app/i18n";
+import { unstable_cache } from "next/cache";
 
-const  i18nNamespaces = ['chapter','common'];
-
+const i18nNamespaces = ["chapter", "common"];
 
 export default async function ChapterPage({
   params,
 }: {
   params: { id: string; chapterId: string; locale: string };
 }) {
-
   const { t } = await initTranslations(params.locale, i18nNamespaces);
-
 
   // chapter is an array of pages
   const chapter = await mangadex.fetchChapterPages(params.chapterId);
 
   // Fetching mangaInfo from API
-  const mangaInfo = await mangadex.fetchMangaInfo(params.id);
+  const mangaInfo = await unstable_cache(
+    () => mangadex.fetchMangaInfo(params.id),
+    [params.id],
+    { tags: ["manga-info"], revalidate: 3600 }
+  )();
 
   // Note that latest chapter is at index 0
   const currentChapterIndex = mangaInfo.chapters?.findIndex(
     (chapter) => chapter.id === params.chapterId
   );
-  
+
   const previousChapterIndex = (currentChapterIndex ?? -1) + 1;
   const nextChapterIndex = (currentChapterIndex ?? 1) - 1;
   return (
     <main className="min-h-screen bg-slate-900 text-white p-6 flex place-items-center flex-col">
       {/** Navigation */}
-
       <div className="fixed bottom-0 bg-gradient-to-t from-black w-full p-6 pt-10 grid place-items-center">
         <span className="flex gap-4 flex-shrink">
           <Link
@@ -63,6 +64,7 @@ export default async function ChapterPage({
           )}
         </span>
       </div>
+
       {/** Manga Information */}
       <div className="my-4">
         <h1 className="font-bold text-xl border-indigo-400 border-l-4 pl-4 mb-4">

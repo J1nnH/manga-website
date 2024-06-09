@@ -120,66 +120,68 @@ export default function Header() {
       </ul> */}
 
       {/** Sidebar Menu on Mobile View */}
-      {isMenuOpen && (
-        <>
-          <div
+      <div
+        onClick={() => setIsMenuOpen(false)}
+        className={`z-10 h-screen w-screen backdrop-blur transition-all ${
+          isMenuOpen ? "fixed" : "hidden"
+        }`}
+      />
+      <nav
+        className={`z-10 md:hidden fixed h-full left-0 w-[70vw] bg-gray-800 p-6 justify-center transition-all duration-300 ${
+          isMenuOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="w-full mb-8 justify-between flex">
+          <h1 className="font-bold text-2xl uppercase">Menu</h1>
+          {/** Close icon */}
+          <svg
             onClick={() => setIsMenuOpen(false)}
-            className="z-10 fixed h-screen w-screen backdrop-blur	"
-          />
-          <nav className="z-10 md:hidden fixed h-full left-0 w-[70vw] bg-black p-6 justify-center">
-            <div className="w-full mb-8 justify-between flex">
-              <h1 className="font-bold text-2xl uppercase">Menu</h1>
-              {/** Close icon */}
-              <svg
-                onClick={() => setIsMenuOpen(false)}
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 384 512"
-                className="aspect-square w-8 fill-white"
-              >
-                <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
-              </svg>
-            </div>
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 384 512"
+            className="aspect-square w-8 fill-white"
+          >
+            <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+          </svg>
+        </div>
 
-            <ul className="gap-4 grid grid-cols-1">
-              {navigation.map((nav) => {
-                if (
-                  (nav.key === "nav4" && !cookie.userId) ||
-                  (nav.key !== "nav4" && nav.key !== "nav6")
-                ) {
-                  return (
-                    <Link
-                      href={nav.path}
-                      onClick={() => setIsMenuOpen(false)}
-                      key={nav.key}
+        <ul className="gap-4 grid grid-cols-1">
+          {navigation.map((nav) => {
+            if (
+              (nav.key === "nav4" && !cookie.userId) ||
+              (nav.key !== "nav4" && nav.key !== "nav6")
+            ) {
+              return (
+                <Link
+                  href={nav.path}
+                  onClick={() => setIsMenuOpen(false)}
+                  key={nav.key}
+                >
+                  <li className="text-xl uppercase border-l-indigo-500 border-l-4 pl-2">
+                    {t(nav.key)}
+                  </li>
+                </Link>
+              );
+            } else if (nav.key === "nav6" && cookie.userId) {
+              return (
+                <li
+                  key={nav.key}
+                  className="text-xl uppercase border-l-indigo-500 border-l-4 pl-2 text-justify"
+                >
+                  <div>
+                    <button
+                      className="uppercase"
+                      type="submit"
+                      onClick={handleLogout}
                     >
-                      <li className="text-xl uppercase border-l-indigo-500 border-l-4 pl-2">
-                        {t(nav.key)}
-                      </li>
-                    </Link>
-                  );
-                } else if (nav.key === "nav6" && cookie.userId) {
-                  return (
-                    <li
-                      key={nav.key}
-                      className="text-xl uppercase border-l-indigo-500 border-l-4 pl-2 text-justify"
-                    >
-                      <div>
-                        <button
-                          className="uppercase"
-                          type="submit"
-                          onClick={handleLogout}
-                        >
-                          {t(nav.key)}
-                        </button>
-                      </div>
-                    </li>
-                  );
-                }
-              })}
-            </ul>
-          </nav>
-        </>
-      )}
+                      {t(nav.key)}
+                    </button>
+                  </div>
+                </li>
+              );
+            }
+          })}
+        </ul>
+      </nav>
     </header>
   );
 }

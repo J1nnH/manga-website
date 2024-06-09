@@ -2,10 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { mangadex } from "@/app/[locale]/(components)/mangaDexInstance";
 import initTranslations from "@/app/i18n";
+import { unstable_cache } from "next/cache";
 
-const  i18nNamespaces = ['manga','common'];
-
-
+const i18nNamespaces = ["manga", "common"];
 
 export const revalidate = 3600;
 
@@ -14,11 +13,14 @@ export default async function MangaPage({
 }: {
   params: { id: string; locale: string };
 }) {
-
   const { t } = await initTranslations(params.locale, i18nNamespaces);
 
   // Fetching mangaInfo using the mangaID
-  const mangaInfo = await mangadex.fetchMangaInfo(params.id);
+  const mangaInfo = await unstable_cache(
+    () => mangadex.fetchMangaInfo(params.id),
+    [params.id],
+    { tags: ["manga-info"], revalidate: 3600 }
+  )();
 
   return (
     <main className="min-h-screen bg-slate-900 text-white p-6">
@@ -31,7 +33,6 @@ export default async function MangaPage({
           alt={mangaInfo.title as string}
         />
         <div className="w-full">
-
           {/* Title of the manga */}
           <h1 className="font-bold text-xl border-indigo-400 border-l-4 pl-4 mb-2">
             {mangaInfo.title as string}
@@ -61,16 +62,21 @@ export default async function MangaPage({
             </p>
 
             {/* Others info of the manga */}
-            <p>{t("release")}: {mangaInfo.releaseDate}</p>
-            <p>{t("status")}: {mangaInfo.status}</p>
-            <p>{t("totalChap")}: {mangaInfo.chapters?.length}</p>
+            <p>
+              {t("release")}: {mangaInfo.releaseDate}
+            </p>
+            <p>
+              {t("status")}: {mangaInfo.status}
+            </p>
+            <p>
+              {t("totalChap")}: {mangaInfo.chapters?.length}
+            </p>
           </div>
         </div>
       </div>
 
       {/** Chapter List */}
       <div className="my-4">
-
         {/* Title of the section */}
         <h1 className="font-bold text-xl mb-4">{t("chapter")}</h1>
 
@@ -88,10 +94,9 @@ export default async function MangaPage({
                 </h1>
                 <div>
                   <h1>
-                    {`${t("volume")}` +
-                      chapter.volumeNumber +
-                      `${t("chapter")}` +
-                      chapter.chapterNumber}
+                    {`${t("volume")} ${chapter.volumeNumber} ${t("chapter")} ${
+                      chapter.chapterNumber
+                    }`}
                   </h1>
                   <h1>{chapter.title}</h1>
                 </div>
