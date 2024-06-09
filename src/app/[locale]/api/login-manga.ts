@@ -4,8 +4,6 @@ import { client } from "./mongodbClient";
 import { RegiserLoginType } from "./register-manga";
 import bcrypt from "bcrypt";
 
-
-
 export async function loginManga(userDetails: RegiserLoginType) {
   try {
     // Establishes a connection to the MongoDB server.
@@ -19,7 +17,6 @@ export async function loginManga(userDetails: RegiserLoginType) {
       username: userDetails.username,
     });
 
-
     // If no user is found, the function returns a status indicating that the username does not exist.
     if (!data) {
       return {
@@ -27,7 +24,6 @@ export async function loginManga(userDetails: RegiserLoginType) {
         message: "Username does not exist",
       };
     }
-
 
     // Uses bcrypt to compare the provided password with the hashed password stored in the database.
     const passwordMatches = await bcrypt.compare(
