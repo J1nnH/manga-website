@@ -14,6 +14,8 @@ export default async function AllMangaPage({
   searchParams: { page: string; limit: string };
   params: { locale: string };
 }) {
+  const { t } = await initTranslations(params.locale, i18nNamespaces);
+
   const { page, limit } = searchParams;
   assert(
     typeof Number(page) === "number" || typeof page === "undefined",
@@ -23,8 +25,6 @@ export default async function AllMangaPage({
     typeof Number(limit) === "number" || typeof limit === "undefined",
     "Limit must be a number or undefined"
   );
-
-  const { t } = await initTranslations(params.locale, i18nNamespaces);
 
   const latestUpdates = await mangadex.fetchLatestUpdates(
     Number(page) || 1,
