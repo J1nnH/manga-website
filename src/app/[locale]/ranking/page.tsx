@@ -33,10 +33,10 @@ export default async function Ranking({
     >
       <main className="min-h-screen  bg-slate-900 text-white p-10">
         {/* The title of the page */}
-        <h1 className="text-2xl font-bold inline mb-6">{t("most-popular")}</h1>
+        <h1 className="text-2xl font-bold inline">{t("most-popular")}</h1>
 
         {/* Looping through each each manga, then return the manga */}
-        <ul className="grid gap-5 grid-cols-1">
+        <ul className="grid gap-5 grid-cols-1 mt-8">
           {popular?.results.map(async (manga: IMangaResult, index: number) => {
             // Fetching manga info from the API base on the manga id
             const mangaInfo = await unstable_cache(
