@@ -14,12 +14,7 @@ export default async function Home({ params }: { params: { locale: string } }) {
   );
 
   // Cache the latest updates and popular manga
-  const latestUpdates = await unstable_cache(
-    () => mangadex.fetchLatestUpdates(),
-    ["latest-updates"],
-    { tags: ["latest-updates"], revalidate: 3600 }
-  )();
-
+  const latestUpdates = await mangadex.fetchLatestUpdates();
   const popular = await unstable_cache(
     () => mangadex.fetchPopular(),
     ["popular"],
@@ -40,10 +35,13 @@ export default async function Home({ params }: { params: { locale: string } }) {
               {/* Subtitle 1 = Latest Updates */}
               {t("subtitle1")}
             </h1>
-            <div className="inline absolute right-0 py-2 px-4 bg-yellow-500 rounded-l-lg text-black text-xs">
+            <Link
+              href={`/manga`}
+              className="inline absolute right-0 py-2 px-4 bg-yellow-500 rounded-l-lg text-black text-xs"
+            >
               {/* Subtitle 2 = All Updates */}
               {t("subtitle2")} {">>"}
-            </div>
+            </Link>
           </div>
           {/* Grid of latest updates */}
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">

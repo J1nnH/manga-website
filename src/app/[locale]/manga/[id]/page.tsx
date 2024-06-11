@@ -6,8 +6,6 @@ import { unstable_cache } from "next/cache";
 
 const i18nNamespaces = ["manga", "common"];
 
-export const revalidate = 3600;
-
 export default async function MangaPage({
   params,
 }: {
