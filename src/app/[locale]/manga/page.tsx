@@ -55,7 +55,7 @@ export default async function AllMangaPage({
               [manga.id],
               { tags: ["manga-info"], revalidate: 3600 }
             )();
-            return <MangaGrid mangaInfo={mangaInfo} />;
+            return <MangaGrid mangaInfo={mangaInfo} key={manga.id} />;
           })}
         </div>
 
