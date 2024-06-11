@@ -15,7 +15,7 @@ export default function MangaGrid({
   const { t } = useTranslation();
 
   return mangaInfo ? (
-    <div className="relative hover:scale-105 h-fit transition-all">
+    <div className="relative hover:scale-105 h-fit transition-all text-white">
       <Link
         href={`../manga/${mangaInfo?.id}`}
         className="relative"

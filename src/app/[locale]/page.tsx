@@ -14,12 +14,7 @@ export default async function Home({ params }: { params: { locale: string } }) {
   );
 
   // Cache the latest updates and popular manga
-  const latestUpdates = await unstable_cache(
-    () => mangadex.fetchLatestUpdates(),
-    ["latest-updates"],
-    { tags: ["latest-updates"], revalidate: 3600 }
-  )();
-
+  const latestUpdates = await mangadex.fetchLatestUpdates();
   const popular = await unstable_cache(
     () => mangadex.fetchPopular(),
     ["popular"],

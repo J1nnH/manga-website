@@ -9,12 +9,12 @@ import { useRouter } from "next/navigation";
 import LanguageChanger from "./(components)/LanguageChanger";
 
 const navigation = [
-  { path: "/", key: "nav1", title: "manga" },
+  { path: "/manga", key: "nav1", title: "manga" },
   { path: "/ranking", key: "nav2", title: "ranking" },
   { path: "/favourites", key: "nav3", title: "favourites" },
   { path: "/login-manga", key: "nav4", title: "login" },
-  { path: "/", key: "nav6", title: "logout" },
   { path: "/about", key: "nav5", title: "about" },
+  { path: "/", key: "nav6", title: "logout" },
 ];
 
 export default function Header() {
