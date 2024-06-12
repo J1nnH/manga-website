@@ -38,7 +38,7 @@ export default function TrendingItem({
           {manga.title as string}
         </h1>
         <p className="text-white text-sm line-clamp-2">
-          {manga.description as string}
+          {(mangaInfo.description as { en: string })?.en}
         </p>
       </div>
     </Link>

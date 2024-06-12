@@ -3,6 +3,7 @@ import Link from "next/link";
 import { mangadex } from "@/app/[locale]/(components)/mangaDexInstance";
 import initTranslations from "@/app/i18n";
 import { unstable_cache } from "next/cache";
+import { CLOUDINARY_BASE_URL } from "../../(components)/constants";
 
 const i18nNamespaces = ["manga", "common"];
 
@@ -25,7 +26,7 @@ export default async function MangaPage({
       {/** Manga Info */}
       <div className="flex flex-col border-white border-b-4 md:flex-row place-items-center gap-6 pb-6">
         <Image
-          src={mangaInfo.image as string}
+          src={CLOUDINARY_BASE_URL + mangaInfo.image}
           width={250}
           height={150}
           alt={mangaInfo.title as string}
