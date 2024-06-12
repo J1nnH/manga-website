@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import LoveBtn from "./love-btn";
 import { useTranslation } from "react-i18next";
+import { CLOUDINARY_BASE_URL } from "./constants";
 
 export default function MangaGrid({
   mangaInfo,
@@ -24,7 +25,7 @@ export default function MangaGrid({
         <Image
           width={200}
           height={400}
-          src={`https://res.cloudinary.com/doavxzpbf/image/fetch/${mangaInfo?.image}`}
+          src={CLOUDINARY_BASE_URL + mangaInfo?.image}
           alt={mangaInfo?.title as string}
           className="aspect-[3/4] object-cover w-full"
         />
