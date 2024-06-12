@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { IMangaInfo } from "@consumet/extensions";
 import MangaGrid from "../(components)/manga-grid";
 import { useTranslation } from "react-i18next";
+import { fetchFavourite } from "./fetchFavourite";
 
 export default function FavouritesPage() {
   const { t } = useTranslation();
@@ -31,17 +32,10 @@ export default function FavouritesPage() {
 
     const fetchMangaInfo = async () => {
       try {
-        // Map thru all favourited manga to fetch their info
-        const mangaInfos = favourites.map(async (fav) => {
-          const mangaInfo = await mangadex.fetchMangaInfo(fav);
-          return mangaInfo;
-        });
-
-        // Wait for all manga info to finish fetching
-        const finishedFetched = await Promise.all(mangaInfos);
-
+        // Wait for manga infos to fetch
+        const mangaInfos = await fetchFavourite(favourites);
         // Save the manga info in state
-        setMangaInfos(finishedFetched);
+        setMangaInfos(mangaInfos);
       } catch (error) {
         console.log(error);
       } finally {
