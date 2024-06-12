@@ -1,4 +1,3 @@
-import { assert } from "console";
 import { mangadex } from "../(components)/mangaDexInstance";
 import MangaGrid from "../(components)/manga-grid";
 import { unstable_cache } from "next/cache";
@@ -15,16 +14,7 @@ export default async function AllMangaPage({
   params: { locale: string };
 }) {
   const { t } = await initTranslations(params.locale, i18nNamespaces);
-
   const { page, limit } = searchParams;
-  assert(
-    typeof Number(page) === "number" || typeof page === "undefined",
-    "Page must be a number or undefined"
-  );
-  assert(
-    typeof Number(limit) === "number" || typeof limit === "undefined",
-    "Limit must be a number or undefined"
-  );
 
   const latestUpdates = await mangadex.fetchLatestUpdates(
     Number(page) || 1,
@@ -48,7 +38,7 @@ export default async function AllMangaPage({
         <h1 className="text-2xl font-bold text-white mb-4">{t("subtitle1")}</h1>
 
         {/** Grid of latest updates */}
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4">
           {latestUpdates.results.map(async (manga) => {
             const mangaInfo = await unstable_cache(
               () => mangadex.fetchMangaInfo(manga.id),

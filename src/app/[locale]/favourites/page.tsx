@@ -2,7 +2,7 @@ import initTranslations from "../../i18n";
 import TranslationProvider from "../(components)/TranslationProvider";
 import FavouritesPage from "./favouritesItem";
 
-const i18nNamespaces = ["favourites", "common"];
+const i18nNamespaces = ["favourites", "common", "home"];
 
 export default async function Favourites({
   params,
