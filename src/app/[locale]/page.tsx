@@ -4,6 +4,7 @@ import { mangadex } from "./(components)/mangaDexInstance";
 import initTranslations from "../i18n";
 import TranslationProvider from "./(components)/TranslationProvider";
 import { unstable_cache } from "next/cache";
+import TrendingItem from "./(components)/trendingItem";
 
 const i18nNamespaces = ["home", "common"];
 
@@ -14,9 +15,14 @@ export default async function Home({ params }: { params: { locale: string } }) {
   );
 
   // Cache the latest updates and popular manga
-  const latestUpdates = await mangadex.fetchLatestUpdates();
+  const latestUpdates = await unstable_cache(
+    () => mangadex.fetchLatestUpdates(),
+    ["latest-updates"],
+    { tags: ["latest-updates"], revalidate: 3600 }
+  )();
+
   const popular = await unstable_cache(
-    () => mangadex.fetchPopular(),
+    () => mangadex.fetchPopular(1, 8),
     ["popular"],
     { tags: ["popular"], revalidate: 3600 }
   )();
@@ -29,7 +35,7 @@ export default async function Home({ params }: { params: { locale: string } }) {
     >
       <main className="overflow-hidden min-h-screen flex flex-col md:flex-row bg-slate-900 text-white">
         {/* Latest Updates */}
-        <div className="p-6 w-full md:w-2/3 relative">
+        <div className="p-6 w-full md:w-2/3 relative md:border-r md:border-r-gray-500">
           <div className="my-4">
             <h1 className="text-xl md:text-3xl font-bold inline">
               {/* Subtitle 1 = Latest Updates */}
@@ -57,23 +63,26 @@ export default async function Home({ params }: { params: { locale: string } }) {
             })}
           </div>
         </div>
-        {/* Popular Manga */}
-        <div className="flex flex-col py-6 px-4 w-full md:w-1/3 gap-4">
-          <h1 className="font-bold text-xl md:text-3xl mt-2">
+
+        {/* Trending Now */}
+        <div className="flex flex-col py-6 px-4 w-full md:w-1/3 gap-8">
+          <h1 className="font-bold text-2xl md:text-3xl mt-2">
             {/* Subtitle 3 = Trending Now */}
             {t("subtitle3")}
           </h1>
-          {popular.results.map((manga, index) => {
+          {popular.results.map(async (manga, index) => {
+            const mangaInfo = await unstable_cache(
+              () => mangadex.fetchMangaInfo(manga.id),
+              [manga.id],
+              { tags: ["manga-info"], revalidate: 3600 }
+            )();
             return (
-              <Link
-                href={`manga/${manga.id}`}
-                className="border-2 border-indigo-300 rounded-lg py-1 px-2 hover:scale-105 transition-all"
-                key={manga.id}
-              >
-                <h1 className="line-clamp-1">
-                  {index + 1}. {manga.title as string}
-                </h1>
-              </Link>
+              <TrendingItem
+                mangaInfo={mangaInfo}
+                index={index}
+                manga={manga}
+                key={index}
+              />
             );
           })}
         </div>

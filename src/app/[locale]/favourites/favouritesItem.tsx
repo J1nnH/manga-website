@@ -55,13 +55,14 @@ export default function FavouritesPage() {
 
   return (
     <div className="p-4 bg-slate-900 min-h-screen text-white">
+      <h1 className="text-2xl font-bold mb-4">{t("favourites")}</h1>
       {
         // Contents is still loading
         isLoading ? (
           <div>{t("prompt1")}</div>
         ) : // Contents finished loading
         favourites.length !== 0 ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
             {mangaInfos.map((mangaInfo) => {
               return <MangaGrid mangaInfo={mangaInfo} key={mangaInfo.id} />;
             })}

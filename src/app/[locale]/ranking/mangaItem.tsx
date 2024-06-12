@@ -6,6 +6,7 @@ import Image from "next/image";
 import { IMangaInfo, IMangaResult } from "@consumet/extensions";
 import LoveBtn from "../(components)/love-btn";
 import { useTranslation } from "react-i18next";
+import { CLOUDINARY_BASE_URL } from "../(components)/constants";
 
 export default function MangaItem({
   mangaInfo,
@@ -16,8 +17,7 @@ export default function MangaItem({
   index: number;
   manga: IMangaResult;
 }) {
-
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   // Initialize 2 variables using useState, default value for isExpanded is false, setIsExpanded is a setter
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -37,7 +37,7 @@ export default function MangaItem({
         <Link href={`manga/${mangaInfo.id}`}>
           <Image
             className="aspect-[3/4]"
-            src={mangaInfo.image as string}
+            src={CLOUDINARY_BASE_URL + mangaInfo?.image}
             width={200}
             height={400}
             alt="cover image"
@@ -46,9 +46,15 @@ export default function MangaItem({
 
         {/* Listing the information of the manga */}
         <div className="w-3/4">
-          <p>{t("title")}: {manga.title as string}</p>
-          <p>{t("year")}: {mangaInfo.releaseDate}</p>
-          <p>{t("status")}: {mangaInfo.status}</p>
+          <p>
+            {t("title")}: {manga.title as string}
+          </p>
+          <p>
+            {t("year")}: {mangaInfo.releaseDate}
+          </p>
+          <p>
+            {t("status")}: {mangaInfo.status}
+          </p>
           <div className="flex flex-wrap w-full">
             {t("genre")}:{" "}
             {mangaInfo.genres?.map((genre) => {
