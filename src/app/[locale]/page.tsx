@@ -77,7 +77,12 @@ export default async function Home({ params }: { params: { locale: string } }) {
               { tags: ["manga-info"], revalidate: 3600 }
             )();
             return (
-              <TrendingItem mangaInfo={mangaInfo} index={index} manga={manga} />
+              <TrendingItem
+                mangaInfo={mangaInfo}
+                index={index}
+                manga={manga}
+                key={index}
+              />
             );
           })}
         </div>
