@@ -7,6 +7,7 @@ import Link from "next/link";
 import LoveBtn from "./love-btn";
 import { useTranslation } from "react-i18next";
 
+console.log("Exposed Cloudinary Cloud Name: doavxzpbf");
 const CLOUDINARY_CLOUD_NAME = "doavxzpbf";
 
 export default function MangaGrid({
