@@ -2,7 +2,6 @@
 
 import { useFavourites } from "../(components)/useFavouritesHook";
 import { useCookies } from "react-cookie";
-import { mangadex } from "../(components)/mangaDexInstance";
 import { useEffect, useState } from "react";
 import { IMangaInfo } from "@consumet/extensions";
 import MangaGrid from "../(components)/manga-grid";

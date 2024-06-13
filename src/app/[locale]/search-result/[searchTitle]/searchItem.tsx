@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { mangadex } from "@/app/[locale]/(components)/mangaDexInstance";
 import MangaGrid from "@/app/[locale]/(components)/manga-grid";
+import { fetchSearchMangaResult } from "./fetchSearchMangaResult";
 import { useState, useEffect } from "react";
 import { IMangaInfo } from "@consumet/extensions";
 import { Button } from "@/components/ui/button";
@@ -28,31 +28,20 @@ export default function UserSearchPage({
     [mangaId: string]: IMangaInfo;
   }>({});
 
-  // This function will execute when the page number and search title have changed
+  // This function will execute when the page number, search title have changed
   useEffect(() => {
     // Content is loading
     setIsLoading(true);
     // Clear the manga details for previous page
     setMangaDetails({});
-
     const fetchSearchResult = async () => {
       try {
-        // Fetch the manga based on the search title
-        const res = await mangadex.search(searchTitle, pageNum, 18);
-
-        // Map thru all the retrieved manga array
-        const fetchDetailsPromise = res.results.map(async (manga) => {
-          // Fetch the manga detail of each individual manga
-          const details = await mangadex.fetchMangaInfo(manga.id);
-
-          // Updates the manga details
-          setMangaDetails((prev) => {
-            return { ...prev, [manga.id]: details };
-          });
-        });
-
-        // Wait for fetching manga details to complete
-        await Promise.all(fetchDetailsPromise);
+        const fetchedMangaDetails = await fetchSearchMangaResult(
+          searchTitle,
+          pageNum,
+          18
+        );
+        setMangaDetails(fetchedMangaDetails);
       } catch (error) {
         console.log(t("errMsg"));
       } finally {
@@ -62,7 +51,7 @@ export default function UserSearchPage({
     };
 
     fetchSearchResult();
-  }, [pageNum, searchTitle]);
+  }, [pageNum, searchTitle, t]);
 
   // Getting an array with all the fetched manga id
   const mangaDetailsArr = Object.keys(mangaDetails);
