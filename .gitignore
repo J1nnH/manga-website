@@ -2,7 +2,7 @@
 
 # locales
 public/locales
-/locales
+# /locales
 
 # .env file
 .env
