@@ -17,7 +17,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import { useTranslation } from "react-i18next";
-import { RegiserLoginType, registerManga } from "@/app/api/register-manga";
+import { RegisterLoginType } from "@/app/api/register-manga/route";
 
 export default function RegisterManga() {
   const { t } = useTranslation();
@@ -29,7 +29,7 @@ export default function RegisterManga() {
   const router = useRouter();
 
   // Use to store the username and password entered by user
-  const [registerDetails, setRegisterDetails] = useState<RegiserLoginType>({
+  const [registerDetails, setRegisterDetails] = useState<RegisterLoginType>({
     username: "",
     password: "",
   });
@@ -56,10 +56,15 @@ export default function RegisterManga() {
     const waitApiCalls = async () => {
       try {
         // Send the register details to server action
-        const res = await registerManga(registerDetails);
+        const res = await fetch("/api/register-manga", {
+          method: "POST",
+          body: JSON.stringify(registerDetails),
+        });
+
+        const data = await res.json();
 
         // The function executed successfully
-        if (res.status === "success") {
+        if (data.status === "success") {
           toast({
             title: `${t("success")}`,
             description: `${t("successDesc")}`,
@@ -70,8 +75,8 @@ export default function RegisterManga() {
         } else {
           toast({
             variant: "destructive",
-            title: res.status,
-            description: res.message,
+            title: data.status,
+            description: data.message,
           });
         }
       } catch (error) {
