@@ -12,10 +12,7 @@ export default function LoveBtn({ mangaId }: { mangaId: string }) {
   const [cookie, setCookie, removeCookie] = useCookies(["userId"]);
 
   // Store all the favourites of an user
-  const [favourites, setFavourites] = useFavourites<string[]>(
-    cookie.userId ?? "",
-    []
-  );
+  const [favourites, setFavourites] = useFavourites<string[]>([]);
 
   // Check if current manga is favourited by user
   const isFavourited = favourites.find((item) => item === mangaId);

@@ -17,10 +17,7 @@ export default function FavouritesPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   // Store all user favourited manga
-  const [favourites, setFavourites] = useFavourites<string[]>(
-    cookie.userId ?? null,
-    []
-  );
+  const [favourites, setFavourites] = useFavourites<string[]>([]);
 
   // Store favourited mangas' info
   const [mangaInfos, setMangaInfos] = useState<IMangaInfo[]>([]);
