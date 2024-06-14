@@ -5,9 +5,7 @@ import { useCookies } from "react-cookie";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { useRouter } from "next/navigation";
-import { addToFavourite } from "../api/add-to-favourite";
 import { useFavourites } from "./useFavouritesHook";
-import { removeFromFavourites } from "../api/remove-from-favourite";
 
 export default function LoveBtn({ mangaId }: { mangaId: string }) {
   // Retrieve cookie of userId
@@ -46,26 +44,36 @@ export default function LoveBtn({ mangaId }: { mangaId: string }) {
     } else {
       // The current manga is not favourited by user
       if (!isFavourited) {
-        // Call server action to add the current manga to favourite
-        const res = await addToFavourite(cookie.userId, mangaId);
+        // Send the userId and mangaId to the add to favourite api route
+        const res = await fetch("/api/add-to-favourite", {
+          method: "PUT",
+          body: JSON.stringify({ userId: cookie.userId, mangaId: mangaId }),
+        });
+
+        const data = await res.json();
 
         // The function executed successfully
-        if (res?.status === "Success") {
+        if (data.status === "Success") {
           // Add the current manga id to favourites
           setFavourites((prev: string[]) => [...prev, mangaId]);
         }
         // Display the message that is returned back
         toast({
-          title: res?.status,
-          description: res?.message,
+          title: data.status,
+          description: data.message,
         });
       } else {
         // The current manga is favourited by user
-        // Call server action to remove it
-        const res = await removeFromFavourites(cookie.userId, mangaId);
+        // Send the userId and mangaId to the remove from favourite api route
+        const res = await fetch("/api/remove-from-favourite", {
+          method: "PUT",
+          body: JSON.stringify({ userId: cookie.userId, mangaId }),
+        });
+
+        const data = await res.json();
 
         // The function executed successfully
-        if (res?.status === "Success") {
+        if (data.status === "Success") {
           // Remove the current manga id to favourites
           setFavourites((prev: string[]) => {
             const newFav = prev.filter((item) => {
@@ -78,8 +86,8 @@ export default function LoveBtn({ mangaId }: { mangaId: string }) {
 
         // Display the message that is returned back
         toast({
-          title: res?.status,
-          description: res?.message,
+          title: data.status,
+          description: data.message,
         });
       }
     }

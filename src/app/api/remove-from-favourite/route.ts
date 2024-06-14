@@ -1,12 +1,15 @@
 "use server";
 
-import { client } from "./mongodbClient";
+import { client } from "../mongodbClient";
 import { PullOperator } from "mongodb";
 import { ObjectId } from "mongodb";
 
-export async function removeFromFavourites(userId: string, mangaId: string) {
+export async function PUT(req: Request) {
   try {
-    // Wait for connection
+    // Extract userId and mangaId from requst body
+    const { userId, mangaId } = await req.json();
+
+    // Wait for connection userId: string, mangaId: string
     await client.connect();
 
     // Select 'users' database
@@ -20,7 +23,10 @@ export async function removeFromFavourites(userId: string, mangaId: string) {
 
     // User does not exists
     if (!user) {
-      return { status: "Error", message: "User does not exists" };
+      return Response.json(
+        { status: "Error", message: "User does not exists" },
+        { status: 400 }
+      );
     } else {
       // Remove the current mangaId from the user favourited manga's array
       await db.updateOne(
@@ -31,14 +37,17 @@ export async function removeFromFavourites(userId: string, mangaId: string) {
       );
 
       // Return success message
-      return {
+      return Response.json({
         status: "Success",
         message: "Successfully removed from favourite",
-      };
+      });
     }
   } catch (error) {
     console.log(error);
-    return { status: "Fail", message: "Internal server error" };
+    return Response.json(
+      { status: "Fail", message: "Internal server error" },
+      { status: 500 }
+    );
   } finally {
     // Close the client
     await client.close();

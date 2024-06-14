@@ -16,8 +16,6 @@ export const fetchFavourite = async (
     // Wait for all manga info to finish fetching
     const finishedFetched = await Promise.all(mangaInfos);
 
-    console.log(finishedFetched);
-
     // Return the fetched manga infos
     return finishedFetched;
   } catch (error) {

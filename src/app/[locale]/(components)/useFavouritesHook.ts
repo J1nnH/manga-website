@@ -1,7 +1,6 @@
 "use client";
 
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { getFavourite } from "../api/get-favourite";
 
 // Custom hook for user favourited manga id
 export const useFavourites = <T>(
@@ -11,8 +10,13 @@ export const useFavourites = <T>(
   const [favourites, setFavourites] = useState<T>(initialState);
 
   useEffect(() => {
+    if (!userId) return;
     const fetchFavourite = async () => {
-      const data = await getFavourite(userId);
+      const res = await fetch(`/api/get-favourite?userId=${userId}`, {
+        method: "GET",
+      });
+
+      const data = await res.json();
 
       if (data.status === "Success") {
         setFavourites(data.message);

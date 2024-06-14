@@ -2,10 +2,14 @@
 
 import { PushOperator } from "mongodb";
 import { ObjectId } from "mongodb";
-import { client } from "./mongodbClient";
+import { client } from "../mongodbClient";
 
-export async function addToFavourite(userId: string, mangaId: string) {
+export async function PUT(req: Request) {
   try {
+    // Extract userId and mangaId from request body
+    const data = await req.json();
+    const { userId, mangaId } = data;
+
     // Wait for connection
     await client.connect();
 
@@ -20,7 +24,10 @@ export async function addToFavourite(userId: string, mangaId: string) {
 
     // User does not exists
     if (!user) {
-      return { status: "Error", message: "User does not exists" };
+      return Response.json(
+        { status: "Error", message: "User does not exists" },
+        { status: 404 }
+      );
     } else {
       // Update the current user favourited manga's array
       await db.updateOne(
@@ -31,11 +38,17 @@ export async function addToFavourite(userId: string, mangaId: string) {
       );
 
       // Return success message
-      return { status: "Success", message: "Successfully added to favourite" };
+      return Response.json({
+        status: "Success",
+        message: "Successfully added to favourite",
+      });
     }
   } catch (error) {
     console.log(error);
-    return { status: "Fail", message: "Internal server error" };
+    return Response.json(
+      { status: "Fail", message: "Internal server error" },
+      { status: 500 }
+    );
   } finally {
     // Close the client
     await client.close();
