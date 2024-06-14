@@ -1,7 +1,7 @@
 "use client";
 
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { getFavourite } from "../../api/get-favourite";
+import { getFavourite } from "@/app/api/get-favourite";
 
 // Custom hook for user favourited manga id
 export const useFavourites = <T>(

@@ -4,15 +4,10 @@ import { PushOperator } from "mongodb";
 import { ObjectId } from "mongodb";
 import { client } from "./mongodbClient";
 import { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
 
-export default async function addToFavourite(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function addToFavourite(userId: string, mangaId: string) {
   try {
-    // Getting mangaId and userId from request body
-    const { mangaId, userId } = req.body;
-
     // Wait for connection
     await client.connect();
 
@@ -38,16 +33,14 @@ export default async function addToFavourite(
       );
 
       // Return success message
-      return res.status(200).json({
+      return {
         status: "Success",
         message: "Successfully added to favourite",
-      });
+      };
     }
   } catch (error) {
     console.log(error);
-    return res
-      .status(500)
-      .json({ status: "Fail", message: "Internal server error" });
+    return { status: "Fail", message: "Internal server error" };
   } finally {
     // Close the client
     await client.close();

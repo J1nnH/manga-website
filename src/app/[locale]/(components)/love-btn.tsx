@@ -5,9 +5,9 @@ import { useCookies } from "react-cookie";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { useRouter } from "next/navigation";
-import { addToFavourite } from "../../api/add-to-favourite";
+import addToFavourite from "@/app/api/add-to-favourite";
 import { useFavourites } from "./useFavouritesHook";
-import { removeFromFavourites } from "../../api/remove-from-favourite";
+import { removeFromFavourites } from "@/app/api/remove-from-favourite";
 
 export default function LoveBtn({ mangaId }: { mangaId: string }) {
   // Retrieve cookie of userId

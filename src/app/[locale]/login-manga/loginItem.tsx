@@ -15,12 +15,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { RegiserLoginType } from "../../api/register-manga";
-import { loginManga } from "../../api/login-manga";
+import { RegiserLoginType } from "@/app/api/register-manga";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useCookies } from "react-cookie";
 import { useTranslation } from "react-i18next";
+import { loginManga } from "@/app/api/login-manga";
 
 export default function LoginManga() {
   const { t } = useTranslation();
