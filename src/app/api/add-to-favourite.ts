@@ -3,9 +3,16 @@
 import { PushOperator } from "mongodb";
 import { ObjectId } from "mongodb";
 import { client } from "./mongodbClient";
+import { NextApiRequest, NextApiResponse } from "next";
 
-export async function addToFavourite(userId: string, mangaId: string) {
+export default async function addToFavourite(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   try {
+    // Getting mangaId and userId from request body
+    const { mangaId, userId } = req.body;
+
     // Wait for connection
     await client.connect();
 
@@ -31,11 +38,16 @@ export async function addToFavourite(userId: string, mangaId: string) {
       );
 
       // Return success message
-      return { status: "Success", message: "Successfully added to favourite" };
+      return res.status(200).json({
+        status: "Success",
+        message: "Successfully added to favourite",
+      });
     }
   } catch (error) {
     console.log(error);
-    return { status: "Fail", message: "Internal server error" };
+    return res
+      .status(500)
+      .json({ status: "Fail", message: "Internal server error" });
   } finally {
     // Close the client
     await client.close();

@@ -15,8 +15,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { RegiserLoginType } from "../api/register-manga";
-import { loginManga } from "../api/login-manga";
+import { RegiserLoginType } from "../../api/register-manga";
+import { loginManga } from "../../api/login-manga";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useCookies } from "react-cookie";
@@ -144,6 +144,21 @@ export default function LoginManga() {
           </Link>
         </div>
       </CardFooter>
+      <button
+        onClick={async () => {
+          const response = await fetch("/api/test", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          const data = await response.json();
+          console.log(data);
+        }}
+      >
+        Click me
+      </button>
     </Card>
   );
 }

@@ -14,8 +14,8 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { RegiserLoginType } from "../api/register-manga";
-import { registerManga } from "../api/register-manga";
+import { RegiserLoginType } from "../../api/register-manga";
+import { registerManga } from "../../api/register-manga";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import { useTranslation } from "react-i18next";
