@@ -55,7 +55,7 @@ export default function RegisterManga() {
   useEffect(() => {
     const waitApiCalls = async () => {
       try {
-        // Send the register details to server action
+        // Send the register details to register manga api route
         const res = await fetch("/api/register-manga", {
           method: "POST",
           body: JSON.stringify(registerDetails),

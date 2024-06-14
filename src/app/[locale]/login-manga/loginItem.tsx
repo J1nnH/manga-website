@@ -15,12 +15,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { RegiserLoginType } from "@/app/api/register-manga";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useCookies } from "react-cookie";
 import { useTranslation } from "react-i18next";
-import { loginManga } from "@/app/api/login-manga";
+import { RegisterLoginType } from "@/app/api/register-manga/route";
 
 export default function LoginManga() {
   const { t } = useTranslation();
@@ -37,7 +36,7 @@ export default function LoginManga() {
   const router = useRouter();
 
   // Use to store the username and password entered by user
-  const [loginDetails, setLoginDetails] = useState<RegiserLoginType>({
+  const [loginDetails, setLoginDetails] = useState<RegisterLoginType>({
     username: "",
     password: "",
   });
@@ -63,11 +62,16 @@ export default function LoginManga() {
   useEffect(() => {
     const waitApiCalls = async () => {
       try {
-        // Pass the login details to loginManga function
-        const res = await loginManga(loginDetails);
+        // Pass the login details to login manga api route
+        const res = await fetch("/api/login-manga", {
+          method: "POST",
+          body: JSON.stringify(loginDetails),
+        });
+
+        const data = await res.json();
 
         // The function execute successfully
-        if (res.status === "success") {
+        if (data.status === "success") {
           toast({
             title: `${t("success")}`,
             description: `${t("successDesc")}`,
@@ -78,7 +82,7 @@ export default function LoginManga() {
 
           todayDate.setDate(todayDate.getDate() + 31);
 
-          setCookie("userId", res.userId, { expires: todayDate });
+          setCookie("userId", data.userId, { expires: todayDate });
 
           // Redirect user back to homepage
           router.push("/");
@@ -86,8 +90,8 @@ export default function LoginManga() {
           // The function return error
           toast({
             variant: "destructive",
-            title: res.status,
-            description: res.message,
+            title: data.status,
+            description: data.message,
           });
         }
       } catch (error) {
@@ -144,21 +148,6 @@ export default function LoginManga() {
           </Link>
         </div>
       </CardFooter>
-      <button
-        onClick={async () => {
-          const response = await fetch("/api/test", {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-
-          const data = await response.json();
-          console.log(data);
-        }}
-      >
-        Click me
-      </button>
     </Card>
   );
 }
