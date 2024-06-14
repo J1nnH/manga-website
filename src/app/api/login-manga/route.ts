@@ -1,10 +1,13 @@
 "use server";
-import { client } from "./mongodbClient";
-import { RegiserLoginType } from "./register-manga";
+
+import { client } from "../mongodbClient";
+import { RegisterLoginType } from "../register-manga/route";
 import bcrypt from "bcrypt";
 
-export async function loginManga(userDetails: RegiserLoginType) {
+export async function POST(req: Request) {
   try {
+    //
+    const userDetails: RegisterLoginType = await req.json();
     // Establishes a connection to the MongoDB server.
     await client.connect();
 
@@ -18,10 +21,13 @@ export async function loginManga(userDetails: RegiserLoginType) {
 
     // If no user is found, the function returns a status indicating that the username does not exist.
     if (!data) {
-      return {
-        status: "Does not exists",
-        message: "Username does not exist",
-      };
+      return Response.json(
+        {
+          status: "Does not exists",
+          message: "Username does not exist",
+        },
+        { status: 404 }
+      );
     }
 
     // Uses bcrypt to compare the provided password with the hashed password stored in the database.
@@ -36,13 +42,19 @@ export async function loginManga(userDetails: RegiserLoginType) {
       If the passwords match, it returns a success status along with the user's ID.
     */
     if (!passwordMatches) {
-      return { status: "Invalid", message: "Password is incorrect" };
+      return Response.json(
+        { status: "Invalid", message: "Password is incorrect" },
+        { status: 400 }
+      );
     } else {
-      return { status: "success", userId: data._id.toString() };
+      return Response.json({ status: "success", userId: data._id.toString() });
     }
   } catch (err) {
     console.log(err);
-    return { status: "Fail", message: "Internal server error" };
+    return Response.json(
+      { status: "Fail", message: "Internal server error" },
+      { status: 500 }
+    );
   } finally {
     await client.close();
   }

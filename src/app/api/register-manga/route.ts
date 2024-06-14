@@ -1,6 +1,6 @@
 "use server";
 
-import { client } from "./mongodbClient";
+import { client } from "../mongodbClient";
 import { z } from "zod";
 import bcrypt from "bcrypt";
 
@@ -11,14 +11,21 @@ const RegisterLoginDetails = z.object({
 });
 
 // Defines a type "RegiserLoginType" based on "RegisterLoginDetails" and EXPORT it for frontend to use
-export type RegiserLoginType = z.infer<typeof RegisterLoginDetails>;
+export type RegisterLoginType = z.infer<typeof RegisterLoginDetails>;
 
-// EXPORT the function
-export async function registerManga(userDetails: RegiserLoginType) {
+// EXPORT the function userDetails: RegiserLoginType
+export async function POST(req: Request) {
   // Validate the userDetails against RegisterLoginDetails, if fails, error message is returned
+  const userDetails = await req.json();
   const result = RegisterLoginDetails.safeParse(userDetails);
   if (!result.success) {
-    return { status: "Required", message: "Username or password is empty" };
+    return Response.json(
+      {
+        status: "Required",
+        message: "Username or password is empty",
+      },
+      { status: 400 }
+    );
   }
 
   try {
@@ -31,7 +38,10 @@ export async function registerManga(userDetails: RegiserLoginType) {
     // Check if a user with same username already exists
     const existed = await db.findOne({ username: userDetails.username });
     if (existed) {
-      return { status: "Existed", message: "Username is already existed " };
+      return Response.json(
+        { status: "Existed", message: "Username is already existed " },
+        { status: 409 }
+      );
     }
 
     // Hashes the user's password for secure storage
@@ -45,9 +55,15 @@ export async function registerManga(userDetails: RegiserLoginType) {
     });
 
     // Return success message
-    return { status: "success", message: "User is successfully created" };
+    return Response.json({
+      status: "success",
+      message: "User is successfully created",
+    });
   } catch (error) {
-    return { status: "Fail", message: "Internal server error" };
+    return Response.json(
+      { status: "Fail", message: "Internal server error" },
+      { status: 500 }
+    );
   } finally {
     // Close the client
     await client.close();
