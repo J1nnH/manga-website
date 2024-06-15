@@ -1,7 +1,6 @@
 "use client";
 
 import { useFavourites } from "../(components)/useFavouritesHook";
-import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
 import { IMangaInfo } from "@consumet/extensions";
 import MangaGrid from "../(components)/manga-grid";
@@ -11,13 +10,10 @@ import { fetchFavourite } from "./fetchFavourite";
 export default function FavouritesPage() {
   const { t } = useTranslation();
 
-  // Retrieve user id from browser cookie
-  const [cookie, setCookie, removeCookie] = useCookies(["userId"]);
-
   const [isLoading, setIsLoading] = useState(true);
 
   // Store all user favourited manga
-  const [favourites, setFavourites] = useFavourites<string[]>([]);
+  const { favourites, setFavourites, fetchLoading } = useFavourites();
 
   // Store favourited mangas' info
   const [mangaInfos, setMangaInfos] = useState<IMangaInfo[]>([]);
@@ -48,17 +44,21 @@ export default function FavouritesPage() {
       <h1 className="text-2xl font-bold mb-4">{t("favourites")}</h1>
       {
         // Contents is still loading
-        isLoading ? (
-          <div>{t("prompt1")}</div>
-        ) : // Contents finished loading
-        favourites.length !== 0 ? (
+        (isLoading || fetchLoading) && <div>{t("prompt1")}</div>
+      }
+      {
+        // Contents finished loading
+        favourites.length !== 0 && (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
             {mangaInfos.map((mangaInfo) => {
               return <MangaGrid mangaInfo={mangaInfo} key={mangaInfo.id} />;
             })}
           </div>
-        ) : (
-          // User does not have any favourites
+        )
+      }
+      {
+        // User does not have any favourites
+        !isLoading && !fetchLoading && favourites.length !== 0 && (
           <div>{t("prompt2")}</div>
         )
       }
