@@ -157,6 +157,7 @@ export default function Header() {
         }`}
       />
       {/** Sidebar Menu */}
+      {/** Sidebar Menu */}
       <nav
         className={`z-10 fixed h-full left-0 w-[70vw] bg-gray-800 flex flex-col transition-all duration-300 xl:hidden ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"

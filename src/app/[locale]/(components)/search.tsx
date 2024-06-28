@@ -5,7 +5,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Search as SearchIcon } from "lucide-react";
+import { Search as SearchIcon } from "lucide-react";
 
+export default function Search({
+  placeholder,
+  lbl,
+}: {
+  placeholder: string;
+  lbl: string;
+}) {
 export default function Search({
   placeholder,
   lbl,
