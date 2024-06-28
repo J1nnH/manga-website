@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { useRouter } from 'next/navigation';
-import { usePathname } from 'next/navigation';
-import { useTranslation } from 'react-i18next';
-import i18nConfig from '@/i18nConfig';
+import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { useTranslation } from "react-i18next";
+import i18nConfig from "@/i18nConfig";
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-  } from "@/components/ui/select";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 import Image from "next/image";
 
@@ -20,8 +20,7 @@ export default function LanguageChanger() {
   const router = useRouter();
   const currentPathname = usePathname();
 
-  const handleChange = newLocale => {
-
+  const handleChange = (newLocale) => {
     // set cookie for next-i18n-router
     const days = 30;
     const date = new Date();
@@ -34,7 +33,7 @@ export default function LanguageChanger() {
       currentLocale === i18nConfig.defaultLocale &&
       !i18nConfig.prefixDefault
     ) {
-      router.push('/' + newLocale + currentPathname);
+      router.push("/" + newLocale + currentPathname);
     } else {
       router.push(
         currentPathname.replace(`/${currentLocale}`, `/${newLocale}`)
@@ -46,22 +45,26 @@ export default function LanguageChanger() {
 
   return (
     <div className="flex justify-center py-2 text-white gap-3 flex-wrap w-[15%] max-w-[250px]">
-        <Select defaultValue="en" onValueChange={handleChange} value={currentLocale}>
+      <Select
+        defaultValue="en"
+        onValueChange={handleChange}
+        value={currentLocale}
+      >
         <SelectTrigger>
-            <Image
+          <Image
             src="/language.png"
             alt="language icon"
             width={32}
             height={32}
-            />
-            <SelectValue placeholder="Language" />
+          />
+          <SelectValue placeholder="Language" />
         </SelectTrigger>
-        <SelectContent >
-            <SelectItem value="en">English</SelectItem>
-            <SelectItem value="ms">Bahasa Melayu</SelectItem>
-            <SelectItem value="zh">Chinese</SelectItem>
+        <SelectContent>
+          <SelectItem value="en">English</SelectItem>
+          <SelectItem value="ms">Bahasa Melayu</SelectItem>
+          <SelectItem value="zh">Chinese</SelectItem>
         </SelectContent>
-        </Select>
+      </Select>
     </div>
   );
 }
