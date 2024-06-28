@@ -4,9 +4,15 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { Search as SearchIcon } from "lucide-react";
 
-export default function Search({placeholder, lbl} : {placeholder:string; lbl:string}) {
-
+export default function Search({
+  placeholder,
+  lbl,
+}: {
+  placeholder: string;
+  lbl: string;
+}) {
   // Use to store the manga title for searching
   const [searchMangaTitle, setSearchMangaTitle] = useState<string>("");
 
@@ -16,7 +22,10 @@ export default function Search({placeholder, lbl} : {placeholder:string; lbl:str
   };
 
   return (
-    <form className="flex gap-5" action={`/search-result/${searchMangaTitle}`}>
+    <form
+      className="flex gap-2 items-center mr-2"
+      action={`/search-result/${searchMangaTitle}`}
+    >
       <Input
         id="searchManga"
         type="text"
@@ -24,15 +33,17 @@ export default function Search({placeholder, lbl} : {placeholder:string; lbl:str
         className="bg-transparent text-md"
         value={searchMangaTitle}
         onChange={(e) => handleChangeTitle(e)}
+        required
       />
-      <Button type="submit" variant="secondary">
-        <label htmlFor="searchManga" className="aspect-square w-4 mr-2">
-          {/* Search icon */}
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-            <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
-          </svg>
+      <Button
+        type="submit"
+        variant="secondary"
+        className="aspect-square md:aspect-auto rounded-full md:rounded-lg"
+      >
+        <label htmlFor="searchManga" className="md:mr-2">
+          <SearchIcon strokeWidth={3} className="h-5 w-5" />
         </label>
-        {lbl}
+        <p className="hidden md:block">{lbl}</p>
       </Button>
     </form>
   );
