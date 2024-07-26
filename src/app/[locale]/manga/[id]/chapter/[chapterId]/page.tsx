@@ -83,7 +83,7 @@ export default async function ChapterPage({
       </div>
 
       {/** Manga Pages */}
-      <div className="grid grid-cols-1 gap-4">
+      <div className="grid grid-cols-1 gap-0">
         {chapter.map((ChapterPage, index) => {
           return (
             <Image
