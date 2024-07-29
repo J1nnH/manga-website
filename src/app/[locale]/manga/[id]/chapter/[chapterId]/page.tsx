@@ -3,6 +3,7 @@ import Link from "next/link";
 import { mangadex } from "@/app/[locale]/(components)/mangaDexInstance";
 import initTranslations from "@/app/i18n";
 import { unstable_cache } from "next/cache";
+import { Key } from "react";
 
 const i18nNamespaces = ["chapter", "common"];
 
@@ -14,18 +15,25 @@ export default async function ChapterPage({
   const { t } = await initTranslations(params.locale, i18nNamespaces);
 
   // chapter is an array of pages
-  const chapter = await mangadex.fetchChapterPages(params.chapterId);
+  const chapter = await unstable_cache(
+    () => mangadex.fetchChapterPages(params.chapterId),
+    [params.chapterId],
+    {
+      tags: ["chapter-pages"],
+      revalidate: false,
+    }
+  )();
 
   // Fetching mangaInfo from API
   const mangaInfo = await unstable_cache(
     () => mangadex.fetchMangaInfo(params.id),
     [params.id],
-    { tags: ["manga-info"], revalidate: 3600 }
+    { tags: ["manga-info"], revalidate: 86400 }
   )();
 
   // Note that latest chapter is at index 0
   const currentChapterIndex = mangaInfo.chapters?.findIndex(
-    (chapter) => chapter.id === params.chapterId
+    (chapter: { id: string }) => chapter.id === params.chapterId
   );
 
   const previousChapterIndex = (currentChapterIndex ?? -1) + 1;
@@ -73,29 +81,35 @@ export default async function ChapterPage({
         <p className="text-md">
           Chapter{" "}
           {(mangaInfo.chapters?.find(
-            (chapter) => chapter.id === params.chapterId
+            (chapter: { id: string }) => chapter.id === params.chapterId
           )?.chapterNumber as string) ?? "N/A"}{" "}
           -{" "}
           {mangaInfo.chapters?.find(
-            (chapter) => chapter.id === params.chapterId
+            (chapter: { id: string }) => chapter.id === params.chapterId
           )?.title ?? "N/A"}
         </p>
       </div>
 
       {/** Manga Pages */}
       <div className="grid grid-cols-1">
-        {chapter.map((ChapterPage, index) => {
-          return (
-            <Image
-              unoptimized
-              key={index}
-              width={500}
-              height={700}
-              src={ChapterPage.img as string}
-              alt={ChapterPage.page.toString() as string}
-            />
-          );
-        })}
+        {chapter.map(
+          (
+            ChapterPage: { img: string; page: { toString: () => string } },
+            index: Key | null | undefined
+          ) => {
+            return (
+              <Image
+                unoptimized
+                key={index}
+                width={700}
+                height={1500}
+                src={ChapterPage.img as string}
+                alt={ChapterPage.page.toString() as string}
+                style={{ height: "auto" }} // Ensure aspect ratio is maintained
+              />
+            );
+          }
+        )}
       </div>
     </main>
   );

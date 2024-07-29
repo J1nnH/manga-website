@@ -2,6 +2,7 @@
 
 import { IMangaInfo } from "@consumet/extensions";
 import { mangadex } from "../(components)/mangaDexInstance";
+import { unstable_cache } from "next/cache";
 
 export const fetchFavourite = async (
   favourites: string[]
@@ -9,7 +10,11 @@ export const fetchFavourite = async (
   try {
     // Map thru all favourited manga to fetch their info
     const mangaInfos = favourites.map(async (fav) => {
-      const mangaInfo = await mangadex.fetchMangaInfo(fav);
+      const mangaInfo = await unstable_cache(
+        () => mangadex.fetchMangaInfo(fav),
+        [fav],
+        { tags: ["manga-info"], revalidate: 86400 }
+      )();
       return mangaInfo;
     });
 

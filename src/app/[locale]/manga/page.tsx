@@ -16,10 +16,11 @@ export default async function AllMangaPage({
   const { t } = await initTranslations(params.locale, i18nNamespaces);
   const { page, limit } = searchParams;
 
-  const latestUpdates = await mangadex.fetchLatestUpdates(
-    Number(page) || 1,
-    Number(limit) || 20
-  );
+  const latestUpdates = await unstable_cache(
+    () => mangadex.fetchLatestUpdates(Number(page) || 1, Number(limit) || 20),
+    [page || "1"],
+    { tags: ["latest-updates"], revalidate: 86400 }
+  )();
 
   const hasPrevPage =
     latestUpdates.currentPage && latestUpdates.currentPage > 1;

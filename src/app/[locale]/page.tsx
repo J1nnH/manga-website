@@ -17,14 +17,14 @@ export default async function Home({ params }: { params: { locale: string } }) {
   // Cache the latest updates and popular manga
   const latestUpdates = await unstable_cache(
     () => mangadex.fetchLatestUpdates(),
-    ["latest-updates"],
-    { tags: ["latest-updates"], revalidate: 3600 }
+    ["1"],
+    { tags: ["latest-updates"], revalidate: 86400 }
   )();
 
   const popular = await unstable_cache(
     () => mangadex.fetchPopular(1, 8),
     ["popular"],
-    { tags: ["popular"], revalidate: 3600 }
+    { tags: ["popular"], revalidate: 86400 }
   )();
 
   return (
@@ -55,7 +55,7 @@ export default async function Home({ params }: { params: { locale: string } }) {
               const mangaInfo = await unstable_cache(
                 () => mangadex.fetchMangaInfo(manga.id),
                 [manga.id],
-                { tags: ["manga-info"], revalidate: 3600 }
+                { tags: ["manga-info"], revalidate: 86400 }
               )();
               return mangaInfo ? (
                 <MangaGrid mangaInfo={mangaInfo} key={mangaInfo.id} />
@@ -74,7 +74,7 @@ export default async function Home({ params }: { params: { locale: string } }) {
             const mangaInfo = await unstable_cache(
               () => mangadex.fetchMangaInfo(manga.id),
               [manga.id],
-              { tags: ["manga-info"], revalidate: 3600 }
+              { tags: ["manga-info"], revalidate: 86400 }
             )();
             return (
               <TrendingItem
