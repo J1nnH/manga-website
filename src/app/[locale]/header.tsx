@@ -163,11 +163,6 @@ export default function Header() {
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <img
-          src="https://placewaifu.com/image/300"
-          alt="waifu"
-          className="max-h-64 pb-8"
-        />
         <div className="p-4">
           <div className="w-full mb-8 justify-between flex">
             <h1 className="font-bold text-2xl uppercase">Menu</h1>
