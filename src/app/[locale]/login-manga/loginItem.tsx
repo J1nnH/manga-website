@@ -108,7 +108,7 @@ export default function LoginManga() {
     if (isLoading === true) {
       waitApiCalls();
     }
-  }, [isLoading]);
+  }, [isLoading, loginDetails, router, setCookie, toast, t]);
 
   return (
     <Card className="w-[350px] mx-auto mt-10">

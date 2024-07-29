@@ -93,7 +93,7 @@ export default function RegisterManga() {
     if (isLoading === true) {
       waitApiCalls();
     }
-  }, [isLoading]);
+  }, [isLoading, registerDetails, router, t, toast]);
 
   return (
     <Card className="w-[350px] mx-auto mt-10">
