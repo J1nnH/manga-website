@@ -128,7 +128,7 @@ export default function Header() {
         />
         <a href="/" title="page logo">
           <Image
-            src="/manga.png"
+            src="/logo.png"
             alt="Logo"
             width={100}
             height={100}
