@@ -21,6 +21,13 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/i18nConfig.js", "src/app/i18n.js"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/i18nConfig.js",
+    "src/app/i18n.js"
+  ],
+  "exclude": ["node_modules", "src/app/api/get-favourite/[route].ts"]
 }
