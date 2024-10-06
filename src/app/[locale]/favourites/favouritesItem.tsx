@@ -24,6 +24,7 @@ export default function FavouritesPage() {
 
     const fetchMangaInfo = async () => {
       try {
+        if(favourites.length === 0) return;
         // Wait for manga infos to fetch
         const mangaInfos = await fetchFavourite(favourites);
         // Save the manga info in state

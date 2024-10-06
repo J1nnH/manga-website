@@ -17,27 +17,28 @@ export const useFavourites = (): {
 
   useEffect(() => {
     setFetchLoading(true);
-    try {
-      if (!userId) return;
-      const fetchFavourite = async () => {
-        const res = await fetch(`/api/get-favourite?userId=${userId}`, {
-          method: "GET",
-        });
+    const fetchFavourite = async () => {
+        try {
+            if (!userId) return;
+            const res = await fetch(`/api/get-favourite?userId=${userId}`, {
+                method: "GET",
+            });
 
-        const data = await res.json();
+            const data = await res.json();
 
-        if (data.status === "Success") {
-          setFavourites(data.message);
-        } else {
-          console.log(data.message);
+            if (data.status === "Success") {
+                setFavourites(data.message);
+            } else {
+                console.log(data.message);
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setFetchLoading(false);
         }
-      };
-      fetchFavourite();
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setFetchLoading(false);
     }
+
+    fetchFavourite();
   }, [userId]);
   return { favourites, setFavourites, fetchLoading };
 };

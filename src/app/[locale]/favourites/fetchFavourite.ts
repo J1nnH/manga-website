@@ -9,9 +9,9 @@ export const fetchFavourite = async (
 ): Promise<IMangaInfo[]> => {
   try {
     // Map thru all favourited manga to fetch their info
-    const mangaInfos = favourites.map(async (fav) => {
+      const mangaInfos = favourites.map(async (fav) => {
       const mangaInfo = await unstable_cache(
-        () => mangadex.fetchMangaInfo(fav),
+        async () => mangadex.fetchMangaInfo(fav),
         [fav],
         { tags: ["manga-info"], revalidate: 86400 }
       )();
