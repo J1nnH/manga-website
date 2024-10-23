@@ -13,7 +13,7 @@ export default function FavouritesPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   // Store all user favourited manga
-  const { favourites, setFavourites, fetchLoading } = useFavourites();
+  const { favourites, favouriteLoading } = useFavourites();
 
   // Store favourited mangas' info
   const [mangaInfos, setMangaInfos] = useState<IMangaInfo[]>([]);
@@ -24,7 +24,7 @@ export default function FavouritesPage() {
 
     const fetchMangaInfo = async () => {
       try {
-        if(favourites.length === 0) return;
+        if(!favouriteLoading && favourites && favourites.length === 0) return;
         // Wait for manga infos to fetch
         const mangaInfos = await fetchFavourite(favourites);
         // Save the manga info in state
@@ -45,11 +45,11 @@ export default function FavouritesPage() {
       <h1 className="text-2xl font-bold mb-4">{t("favourites")}</h1>
       {
         // Contents is still loading
-        (isLoading || fetchLoading) && <div>{t("prompt1")}</div>
+        (isLoading || favouriteLoading) && <div>{t("prompt1")}</div>
       }
       {
-        // Contents finished loading
-        favourites.length !== 0 && (
+        // Contents finished loading and user has favourites
+        !isLoading && !favouriteLoading && favourites && favourites.length > 0 && (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
             {mangaInfos.map((mangaInfo) => {
               return <MangaGrid mangaInfo={mangaInfo} key={mangaInfo.id} />;
@@ -59,7 +59,7 @@ export default function FavouritesPage() {
       }
       {
         // User does not have any favourites
-        !isLoading && !fetchLoading && favourites.length !== 0 && (
+        !isLoading && !favouriteLoading && favourites && favourites.length === 0 && (
           <div>{t("prompt2")}</div>
         )
       }

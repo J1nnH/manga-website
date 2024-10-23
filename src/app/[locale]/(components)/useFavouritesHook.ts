@@ -1,44 +1,37 @@
 "use client";
 
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import useSWR from "swr";
 
 // Custom hook for user favourited manga id
 export const useFavourites = (): {
   favourites: string[];
-  setFavourites: Dispatch<SetStateAction<string[]>>;
-  fetchLoading: boolean;
+  favouriteLoading: boolean;
+  error: any; 
 } => {
-  const [favourites, setFavourites] = useState<string[]>([]);
-  const [cookie, setCookie, removeCookie] = useCookies(["userId"]);
-  const [fetchLoading, setFetchLoading] = useState(true);
+  const [cookie, _, __] = useCookies(["userId"]);
 
   const userId = cookie.userId;
 
-  useEffect(() => {
-    setFetchLoading(true);
-    const fetchFavourite = async () => {
-        try {
-            if (!userId) return;
-            const res = await fetch(`/api/get-favourite?userId=${userId}`, {
-                method: "GET",
-            });
+  const fetchData = async(url: string | null, userId: string) => {
+    if(!url || !userId) return [];
 
-            const data = await res.json();
+    try {
+       const fetchedFavourite = await fetch(url, { method: "GET" });
+       const data = await fetchedFavourite.json();
 
-            if (data.status === "Success") {
-                setFavourites(data.message);
-            } else {
-                console.log(data.message);
-            }
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setFetchLoading(false);
-        }
+       if(data.status === "Success") {
+            return data.message;
+       } else {
+            return [];
+       }
+    } catch (error) {
+        console.log(error);
+        return [];
     }
+  }
 
-    fetchFavourite();
-  }, [userId]);
-  return { favourites, setFavourites, fetchLoading };
+  const { data, isLoading, error } = useSWR([ userId ? `/api/get-favourite?userId=${userId}` : null, userId ], ([url, userId]) => fetchData(url, userId));
+
+  return { favourites: data as string[], favouriteLoading: isLoading, error };
 };

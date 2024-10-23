@@ -43,7 +43,7 @@ export default function MangaGrid({
           </p>
         </div>
       </Link>
-      <div className="absolute bottom-[2px] right-[5px] w-[13%] hover:opacity-75 transition-opacity">
+      <div className="absolute bottom-[2px] right-[5px] w-[12%] hover:opacity-75 transition-opacity">
         <LoveBtn mangaId={mangaInfo.id} />
       </div>
     </div>

@@ -3,12 +3,16 @@
 import { PushOperator } from "mongodb";
 import { ObjectId } from "mongodb";
 import { client } from "../mongodbClient";
+import { revalidateTag } from "next/cache";
 
 export async function PUT(req: Request) {
   try {
     // Extract userId and mangaId from request body
     const data = await req.json();
-    const { userId, mangaId } = data;
+    const { userId, mangaId, tag } = data;
+
+    // Revalidate the cached favourite
+    revalidateTag(tag);
 
     // Wait for connection
     await client.connect();
